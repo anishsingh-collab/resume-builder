@@ -1,69 +1,1185 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import { Download, Play, Plus, Trash, Target, CheckCircle2, AlertCircle, Award, FileText, ExternalLink, RefreshCw, RotateCcw, X, Shield } from "lucide-react";
+import CreatableSelect from "react-select/creatable";
+
+// --- React-Select Styling for Industrial Dark Theme ---
+const selectStyles = {
+  control: (base: any, state: any) => ({
+    ...base,
+    background: 'rgba(255,255,255,0.03)',
+    borderColor: state.isFocused ? '#ffffff' : 'rgba(255,255,255,0.12)',
+    boxShadow: state.isFocused ? '0 0 0 1px #ffffff' : 'none',
+    color: '#ffffff',
+    borderRadius: '4px',
+    padding: '2px',
+    fontSize: '13px',
+    transition: 'all 0.15s ease',
+    '&:hover': {
+      borderColor: 'rgba(255,255,255,0.3)',
+    }
+  }),
+  menu: (base: any) => ({
+    ...base,
+    background: '#121212',
+    border: '1px solid rgba(255,255,255,0.15)',
+    borderRadius: '4px',
+    zIndex: 100,
+  }),
+  option: (base: any, state: any) => ({
+    ...base,
+    background: state.isFocused ? 'rgba(255,255,255,0.08)' : 'transparent',
+    color: '#ffffff',
+    fontSize: '13px',
+    cursor: 'pointer',
+    '&:active': {
+      background: 'rgba(255,255,255,0.15)',
+    }
+  }),
+  multiValue: (base: any) => ({
+    ...base,
+    background: 'rgba(255,255,255,0.1)',
+    borderRadius: '3px',
+  }),
+  multiValueLabel: (base: any) => ({
+    ...base,
+    color: '#f4f4f5',
+    fontSize: '12px',
+    fontWeight: 500,
+  }),
+  multiValueRemove: (base: any) => ({
+    ...base,
+    color: '#a1a1aa',
+    '&:hover': {
+      background: '#ef4444',
+      color: '#ffffff',
+    }
+  }),
+  input: (base: any) => ({
+    ...base,
+    color: '#ffffff',
+  }),
+};
+
+// --- Presets ---
+const languageOptions = ["JavaScript", "TypeScript", "Python", "Java", "C++", "C", "C#", "Go", "Rust", "Swift", "Kotlin", "Ruby", "PHP", "SQL", "HTML/CSS"].map(l => ({ value: l, label: l }));
+const frameworkOptions = ["React", "Next.js", "Vue", "Angular", "Node.js", "Express", "Django", "Flask", "Spring Boot", ".NET", "Ruby on Rails", "Tailwind CSS"].map(l => ({ value: l, label: l }));
+const toolOptions = ["Git", "Docker", "Kubernetes", "AWS", "GCP", "Azure", "Linux", "Jenkins", "GitHub Actions", "Figma", "Postman"].map(l => ({ value: l, label: l }));
+const csOptions = ["Data Structures", "Algorithms", "Object-Oriented Programming", "System Design", "Databases", "Operating Systems", "Computer Networks"].map(l => ({ value: l, label: l }));
+
+const InputField = ({ label, placeholder, value, onChange, className = "" }: any) => (
+  <div className={className}>
+    <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">{label}</label>
+    <input className="dark-input" placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)} />
+  </div>
+);
+
+// --- Sample Resume & JD for One-Click Demo ---
+const sampleResumeData = {
+  personal: {
+    name: "Alex Chen",
+    email: "alex.chen@berkeley.edu",
+    phone: "+1 (510) 847-2918",
+    linkedin: "linkedin.com/in/alexchen",
+    github: "github.com/alexchen",
+  },
+  education: {
+    university: "University of California, Berkeley",
+    location: "Berkeley, CA",
+    degree: "B.S. in Computer Science",
+    dates: "Aug 2022 – May 2026",
+    gpa: "9.2/10.0",
+  },
+  skills: {
+    languages: "Python, TypeScript, C++, Java, Go, SQL, C",
+    frameworks: "React, Next.js, Node.js, Express, FastAPI, Tailwind CSS",
+    tools: "Docker, Kubernetes, AWS, Git, Linux, PostgreSQL, Redis, Postman",
+    csFundamentals: "Distributed Systems, Data Structures, Algorithms, System Design, Operating Systems",
+  },
+  experience: [
+    {
+      title: "Software Engineering Intern",
+      company: "Datadog",
+      location: "New York, NY",
+      dates: "May 2025 – Aug 2025",
+      description: "Engineered real-time telemetry pipelines and optimized Redis caching",
+      bullets: [
+        "Architected a high-throughput event processing pipeline using Go and Kafka, handling 150K+ events/sec with sub-15ms latency.",
+        "Engineered an automated Redis caching tier that reduced database query overhead by 38% during high-traffic operational bursts.",
+        "Collaborated with infrastructure teams to deploy Kubernetes horizontal pod autoscalers across multi-region AWS clusters."
+      ],
+      feedback: "",
+    },
+    {
+      title: "Full-Stack Developer Intern",
+      company: "Scale AI",
+      location: "San Francisco, CA",
+      dates: "May 2024 – Aug 2024",
+      description: "Built microservices and annotation workflows",
+      bullets: [
+        "Constructed asynchronous REST and gRPC endpoints in Python and FastAPI to ingest multimodal training datasets.",
+        "Refactored React dashboard components with TypeScript, improving client-side bundle size by 24% and render speed by 180ms."
+      ],
+      feedback: "",
+    }
+  ],
+  projects: [
+    {
+      name: "Distributed Key-Value Store",
+      technologies: "Go, Raft Consensus, gRPC, Docker, Linux",
+      dates: "Jan 2025 – Mar 2025",
+      description: "Fault-tolerant distributed store implementing Raft",
+      bullets: [
+        "Implemented Raft consensus algorithm from scratch in Go, providing strong consistency guarantees across 5-node distributed clusters.",
+        "Engineered custom RPC communication protocol via gRPC and Protocol Buffers, sustaining 4,200 req/sec under simulated partition testing."
+      ],
+      feedback: "",
+    },
+    {
+      name: "Collaborative Real-Time Canvas",
+      technologies: "TypeScript, React, WebSockets, Node.js, WebGL",
+      dates: "Oct 2024 – Dec 2024",
+      description: "Real-time canvas using CRDTs",
+      bullets: [
+        "Designed conflict-free replicated data types (CRDT) engine supporting low-latency concurrent drawing across 50+ simultaneous peers.",
+        "Optimized canvas render cycles using requestAnimationFrame and WebGL shaders, achieving steady 60 FPS under complex stroke density."
+      ],
+      feedback: "",
+    }
+  ],
+  certifications: [
+    { name: "AWS Certified Developer – Associate", issuer: "Amazon Web Services", date: "2025" }
+  ],
+};
+
+const sampleJobDescription = `Software Engineer, Infrastructure & Full Stack
+Requirements:
+- Bachelor's degree in Computer Science or related technical discipline
+- Strong proficiency in modern programming languages: Python, Go, TypeScript, or C++
+- Experience with distributed systems, microservices, and asynchronous event pipelines (Kafka/RabbitMQ)
+- Hands-on experience with cloud infrastructure: Docker, Kubernetes, AWS, and Linux
+- Solid understanding of core CS fundamentals: Data Structures, Algorithms, System Design
+- Experience building performant APIs and scalable databases (PostgreSQL, Redis)`;
+
+const emptyResumeData = {
+  personal: { name: "", email: "", phone: "", linkedin: "", github: "" },
+  education: { university: "", location: "", degree: "", dates: "", gpa: "" },
+  skills: { languages: "", frameworks: "", tools: "", csFundamentals: "" },
+  experience: [{ title: "", company: "", location: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
+  projects: [{ name: "", technologies: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
+  certifications: [{ name: "", issuer: "", date: "" }],
+};
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+  const [texCode, setTexCode] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("classic");
+  const [atsLoading, setAtsLoading] = useState(false);
+  const [jobDescription, setJobDescription] = useState("");
+  const [atsResult, setAtsResult] = useState<any>(null);
+  const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | null>(null);
+
+  const [data, setData] = useState({
+    personal: { name: "", email: "", phone: "", linkedin: "", github: "" },
+    education: { university: "", location: "", degree: "", dates: "", gpa: "" },
+    skills: { languages: "", frameworks: "", tools: "", csFundamentals: "" },
+    experience: [{ title: "", company: "", location: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
+    projects: [{ name: "", technologies: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
+    certifications: [{ name: "", issuer: "", date: "" }],
+  });
+
+  const [hasLoadedStorage, setHasLoadedStorage] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<string>("Synced locally");
+
+  // Load from localStorage on initial render
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem("rb_resume_data");
+      const savedTemplate = localStorage.getItem("rb_resume_template");
+      const savedJD = localStorage.getItem("rb_resume_jd");
+      if (savedData) {
+        setData(JSON.parse(savedData));
+      }
+      if (savedTemplate) {
+        setSelectedTemplate(savedTemplate);
+      }
+      if (savedJD) {
+        setJobDescription(savedJD);
+      }
+    } catch (e) {
+      console.error("Failed to load from localStorage", e);
+    } finally {
+      setHasLoadedStorage(true);
+    }
+  }, []);
+
+  // Auto-save to localStorage whenever data or template changes
+  useEffect(() => {
+    if (!hasLoadedStorage) return;
+    try {
+      localStorage.setItem("rb_resume_data", JSON.stringify(data));
+      localStorage.setItem("rb_resume_template", selectedTemplate);
+      localStorage.setItem("rb_resume_jd", jobDescription);
+      setSaveStatus("Saved");
+      const timer = setTimeout(() => setSaveStatus("Synced locally"), 1500);
+      return () => clearTimeout(timer);
+    } catch (e) {
+      console.error("Failed to save to localStorage", e);
+    }
+  }, [data, selectedTemplate, jobDescription, hasLoadedStorage]);
+
+  const loadSampleProfile = () => {
+    setData(sampleResumeData);
+    setJobDescription(sampleJobDescription);
+    setAtsResult(null);
+  };
+
+  const resetForm = () => {
+    if (confirm("Reset resume back to blank? All fields will be cleared.")) {
+      setData(emptyResumeData);
+      setJobDescription("");
+      setAtsResult(null);
+      setTexCode("");
+      try {
+        localStorage.removeItem("rb_resume_data");
+        localStorage.removeItem("rb_resume_jd");
+      } catch (e) {}
+    }
+  };
+
+  const updatePersonal = (field: string, value: string) => setData({ ...data, personal: { ...data.personal, [field]: value } });
+  const updateEducation = (field: string, value: string) => setData({ ...data, education: { ...data.education, [field]: value } });
+  const updateSkills = (field: string, value: string) => setData({ ...data, skills: { ...data.skills, [field]: value } });
+
+  const addExperience = () => setData({ ...data, experience: [...data.experience, { title: "", company: "", location: "", dates: "", description: "", bullets: [], feedback: "" }] });
+  const updateExperience = (index: number, field: string, value: string) => {
+    const newExp = [...data.experience];
+    newExp[index] = { ...newExp[index], [field]: value };
+    setData({ ...data, experience: newExp });
+  };
+  const removeExperience = (index: number) => setData({ ...data, experience: data.experience.filter((_, i) => i !== index) });
+
+  const addProject = () => setData({ ...data, projects: [...data.projects, { name: "", technologies: "", dates: "", description: "", bullets: [], feedback: "" }] });
+  const updateProject = (index: number, field: string, value: string) => {
+    const newProj = [...data.projects];
+    newProj[index] = { ...newProj[index], [field]: value };
+    setData({ ...data, projects: newProj });
+  };
+  const removeProject = (index: number) => setData({ ...data, projects: data.projects.filter((_, i) => i !== index) });
+
+  const addCertification = () => setData({ ...data, certifications: [...data.certifications, { name: "", issuer: "", date: "" }] });
+  const updateCertification = (index: number, field: string, value: string) => {
+    const newCerts = [...data.certifications];
+    newCerts[index] = { ...newCerts[index], [field]: value };
+    setData({ ...data, certifications: newCerts });
+  };
+  const removeCertification = (index: number) => setData({ ...data, certifications: data.certifications.filter((_, i) => i !== index) });
+
+  const enhanceDescription = async (index: number, type: 'experience' | 'projects') => {
+    setLoading(true);
+    try {
+      const item = data[type][index];
+      const res = await fetch("/api/enhance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: item.description, type }),
+      });
+      const result = await res.json();
+      
+      if (result.isVague) {
+        if (type === 'experience') {
+          const newExp = [...data.experience];
+          newExp[index].feedback = result.feedbackQuestion;
+          newExp[index].bullets = [];
+          setData({ ...data, experience: newExp });
+        } else {
+          const newProj = [...data.projects];
+          newProj[index].feedback = result.feedbackQuestion;
+          newProj[index].bullets = [];
+          setData({ ...data, projects: newProj });
+        }
+      } else if (result.bullets) {
+        if (type === 'experience') {
+          const newExp = [...data.experience];
+          newExp[index].bullets = result.bullets;
+          newExp[index].feedback = "";
+          setData({ ...data, experience: newExp });
+        } else {
+          const newProj = [...data.projects];
+          newProj[index].bullets = result.bullets;
+          newProj[index].feedback = "";
+          setData({ ...data, projects: newProj });
+        }
+      } else {
+        alert(result.error || "Failed to enhance");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error enhancing description.");
+    }
+    setLoading(false);
+  };
+
+  const generateResume = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, templateId: selectedTemplate }),
+      });
+      const result = await res.json();
+      if (result.tex) {
+        setTexCode(result.tex);
+      } else {
+        alert("Failed to generate LaTeX");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error generating resume.");
+    }
+    setLoading(false);
+  };
+
+  const downloadTex = () => {
+    const blob = new Blob([texCode], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'resume.tex';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const calculateAtsScore = async () => {
+    setAtsLoading(true);
+    try {
+      const res = await fetch("/api/ats-score", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resumeData: data, jobDescription }),
+      });
+      const result = await res.json();
+      if (result.error) {
+        alert(result.error);
+      } else {
+        setAtsResult(result);
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error calculating ATS score.");
+    }
+    setAtsLoading(false);
+  };
+
+  const parseSkills = (val: string) => val ? val.split(', ').filter(Boolean).map(s => ({ label: s, value: s })) : [];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-black text-white selection:bg-neutral-800">
+      
+      {/* Top Application Bar */}
+      <header className="border-b border-neutral-800/80 bg-neutral-950/80 backdrop-blur-md sticky top-0 z-40">
+        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded border border-neutral-700 bg-neutral-900 flex items-center justify-center font-mono font-bold text-sm text-white">
+              RB
+            </div>
+            <div>
+              <span className="font-semibold tracking-tight text-white text-base">ResumeBuilder</span>
+              <span className="ml-2 font-mono text-[10px] text-neutral-400 px-1.5 py-0.5 rounded border border-neutral-800 bg-neutral-900">v1.2 // LATEX WORKSTATION</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-1.5 ml-4 font-mono text-[11px] text-neutral-400 border border-neutral-800 bg-neutral-900/60 px-2.5 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>{saveStatus}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button 
+              onClick={loadSampleProfile}
+              type="button"
+              className="text-xs font-mono font-medium px-3 py-1.5 rounded border border-neutral-700 hover:border-neutral-400 bg-neutral-900 text-neutral-200 transition-colors flex items-center gap-1.5"
+              title="Pre-populate with realistic Software Engineering candidate profile"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <FileText size={13} className="text-neutral-400" />
+              <span className="hidden sm:inline">Load</span> Demo
+            </button>
+            <button 
+              onClick={resetForm}
+              type="button"
+              className="text-xs font-mono font-medium px-2.5 py-1.5 rounded border border-neutral-800 hover:border-neutral-600 bg-neutral-950 text-neutral-400 hover:text-white transition-colors"
+              title="Clear all fields"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <RotateCcw size={13} />
+            </button>
+            <button 
+              onClick={calculateAtsScore}
+              disabled={atsLoading}
+              className="text-xs font-mono font-medium px-3.5 py-2 rounded border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 transition-colors flex items-center gap-1.5 disabled:opacity-50"
+            >
+              <Target size={14} />
+              <span className="hidden sm:inline">{atsLoading ? "Evaluating..." : "Run ATS Check"}</span>
+              <span className="sm:hidden">ATS</span>
+            </button>
+            <button 
+              onClick={generateResume}
+              disabled={loading}
+              className="text-xs font-mono font-medium px-4 py-2 rounded bg-white text-black hover:bg-neutral-200 transition-colors flex items-center gap-1.5 disabled:opacity-50"
+            >
+              <FileText size={14} />
+              <span className="hidden sm:inline">{loading ? "Compiling..." : "Build LaTeX"}</span>
+              <span className="sm:hidden">Build</span>
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* Main Two-Column Workstation Grid */}
+      <main className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* ================= LEFT COLUMN: FORM EDITOR ================= */}
+          <div className="lg:col-span-7 space-y-6">
+            
+            {/* Header intro */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <h1 className="text-xl font-semibold tracking-tight text-white mb-1">Engineering Resume Compiler</h1>
+              <p className="text-xs text-neutral-400 font-mono">
+                Compile ATS-compliant LaTeX resumes with automated keyword gap analysis and real-time document preview.
+              </p>
+            </div>
+
+            {/* Template Selector */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="text-neutral-500">00.</span> Resume Specification & Format
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setSelectedTemplate("classic")}
+                  className={`text-left p-3.5 rounded border transition-all ${
+                    selectedTemplate === "classic" 
+                      ? "border-white bg-neutral-900/90 text-white" 
+                      : "border-neutral-800 bg-neutral-950/40 text-neutral-400 hover:border-neutral-700"
+                  }`}
+                >
+                  <div className="text-xs font-semibold">Template 01: Classic Tech</div>
+                  <div className="text-[11px] text-neutral-500 mt-1">Jake's Resume architecture • Horizontal rules • Single column ATS standard</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedTemplate("bold")}
+                  className={`text-left p-3.5 rounded border transition-all ${
+                    selectedTemplate === "bold" 
+                      ? "border-white bg-neutral-900/90 text-white" 
+                      : "border-neutral-800 bg-neutral-950/40 text-neutral-400 hover:border-neutral-700"
+                  }`}
+                >
+                  <div className="text-xs font-semibold">Template 02: Bold Compact</div>
+                  <div className="text-[11px] text-neutral-500 mt-1">Deep Mehta architecture • Tabular skill matrix • Tight margins</div>
+                </button>
+              </div>
+            </div>
+
+            {/* Section 1: Personal Info */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 mb-5 flex items-center gap-2">
+                <span className="text-neutral-500">01.</span> Candidate Identification
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <InputField label="Full Name" placeholder="e.g. Alex Chen" value={data.personal.name} onChange={(v: string) => updatePersonal("name", v)} />
+                <InputField label="Email Address" placeholder="e.g. alex.chen@domain.com" value={data.personal.email} onChange={(v: string) => updatePersonal("email", v)} />
+                <InputField label="Phone Number" placeholder="e.g. +1 (555) 019-2834" value={data.personal.phone} onChange={(v: string) => updatePersonal("phone", v)} />
+                <InputField label="LinkedIn Handle / URL" placeholder="e.g. linkedin.com/in/alexchen" value={data.personal.linkedin} onChange={(v: string) => updatePersonal("linkedin", v)} />
+                <InputField label="GitHub Profile URL" placeholder="e.g. github.com/alexchen" value={data.personal.github} onChange={(v: string) => updatePersonal("github", v)} className="sm:col-span-2" />
+              </div>
+            </div>
+
+            {/* Section 2: Education */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 mb-5 flex items-center gap-2">
+                <span className="text-neutral-500">02.</span> Academic Credentials
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <InputField label="Institution / University" placeholder="e.g. University of California, Berkeley" value={data.education.university} onChange={(v: string) => updateEducation("university", v)} />
+                <InputField label="Campus Location" placeholder="e.g. Berkeley, CA" value={data.education.location} onChange={(v: string) => updateEducation("location", v)} />
+                <InputField label="Degree & Major" placeholder="e.g. B.S. in Computer Science" value={data.education.degree} onChange={(v: string) => updateEducation("degree", v)} />
+                <InputField label="Enrollment Dates" placeholder="e.g. Aug 2022 – May 2026" value={data.education.dates} onChange={(v: string) => updateEducation("dates", v)} />
+                <InputField label="Grade Point Average (GPA)" placeholder="e.g. 9.1/10.0 or 3.85/4.0" value={data.education.gpa} onChange={(v: string) => updateEducation("gpa", v)} className="sm:col-span-2" />
+              </div>
+            </div>
+
+            {/* Section 3: Skills */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 mb-5 flex items-center gap-2">
+                <span className="text-neutral-500">03.</span> Technical Competencies
+              </h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Languages</label>
+                  <CreatableSelect instanceId="select-languages" isMulti options={languageOptions} styles={selectStyles} placeholder="Select or type languages (C, Python, TypeScript)..."
+                    value={parseSkills(data.skills.languages)}
+                    onChange={(opts) => updateSkills('languages', opts ? opts.map((o: any) => o.value).join(', ') : '')}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Frameworks & Libraries</label>
+                  <CreatableSelect instanceId="select-frameworks" isMulti options={frameworkOptions} styles={selectStyles} placeholder="Select or type frameworks (React, Next.js, FastAPI)..."
+                    value={parseSkills(data.skills.frameworks)}
+                    onChange={(opts) => updateSkills('frameworks', opts ? opts.map((o: any) => o.value).join(', ') : '')}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Developer Tools & Infrastructure</label>
+                  <CreatableSelect instanceId="select-tools" isMulti options={toolOptions} styles={selectStyles} placeholder="Select or type tools (Docker, AWS, Git, Linux)..."
+                    value={parseSkills(data.skills.tools)}
+                    onChange={(opts) => updateSkills('tools', opts ? opts.map((o: any) => o.value).join(', ') : '')}
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Computer Science Fundamentals</label>
+                  <CreatableSelect instanceId="select-cs" isMulti options={csOptions} styles={selectStyles} placeholder="Select or type fundamentals (Data Structures, OOP, OS)..."
+                    value={parseSkills(data.skills.csFundamentals)}
+                    onChange={(opts) => updateSkills('csFundamentals', opts ? opts.map((o: any) => o.value).join(', ') : '')}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Section 4: Work Experience */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <div className="flex justify-between items-center mb-5">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="text-neutral-500">04.</span> Professional Experience
+                </h2>
+                <button 
+                  type="button" 
+                  onClick={addExperience}
+                  className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 flex items-center gap-1.5"
+                >
+                  <Plus size={13} /> Add Position
+                </button>
+              </div>
+
+              {data.experience.map((exp, i) => (
+                <div key={i} className="mb-8 border-b border-neutral-800/70 pb-8 last:border-0 last:pb-0 last:mb-0 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <InputField label="Position Title" placeholder="e.g. Software Engineering Intern" value={exp.title} onChange={(v: string) => updateExperience(i, "title", v)} />
+                    <InputField label="Company Name" placeholder="e.g. Stripe" value={exp.company} onChange={(v: string) => updateExperience(i, "company", v)} />
+                    <InputField label="Location" placeholder="e.g. San Francisco, CA" value={exp.location} onChange={(v: string) => updateExperience(i, "location", v)} />
+                    <InputField label="Duration" placeholder="e.g. May 2024 – Aug 2024" value={exp.dates} onChange={(v: string) => updateExperience(i, "dates", v)} />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Raw Description (Action & Impact)</label>
+                    <textarea 
+                      className="dark-input h-24 resize-none text-xs" 
+                      placeholder="Draft what you built, technologies used, and outcomes achieved. AI will optimize this into strong ATS bullet points..." 
+                      value={exp.description} 
+                      onChange={e => updateExperience(i, "description", e.target.value)} 
+                    />
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <button 
+                      type="button" 
+                      onClick={() => enhanceDescription(i, "experience")} 
+                      disabled={loading || !exp.description}
+                      className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-white bg-neutral-900 text-white flex items-center gap-1.5 disabled:opacity-40"
+                    >
+                      <Play size={12} /> {loading ? "Enhancing..." : "Format with AI"}
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => removeExperience(i)}
+                      className="text-xs font-mono px-3 py-1.5 rounded border border-red-900/60 text-red-400 hover:bg-red-950/40 flex items-center gap-1"
+                    >
+                      <Trash size={12} /> Remove
+                    </button>
+                  </div>
+
+                  {exp.feedback && (
+                    <div className="bg-amber-950/20 border border-amber-800/40 text-amber-300 p-3.5 rounded text-xs flex gap-2.5 items-start">
+                      <AlertCircle size={15} className="mt-0.5 shrink-0 text-amber-400" />
+                      <p>{exp.feedback}</p>
+                    </div>
+                  )}
+
+                  {exp.bullets.length > 0 && (
+                    <div className="space-y-2 mt-3 bg-neutral-900/50 p-3.5 rounded border border-neutral-800">
+                      <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Engineered Bullets (Editable)</div>
+                      {exp.bullets.map((b, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-2">
+                          <span className="text-neutral-500 text-xs mt-1">•</span>
+                          <input 
+                            className="dark-input !bg-transparent !border-b-neutral-800 !border-t-0 !border-l-0 !border-r-0 !rounded-none !px-0 !py-1 text-xs" 
+                            value={b} 
+                            onChange={(e) => {
+                              const newExp = [...data.experience];
+                              newExp[i].bullets[bIdx] = e.target.value;
+                              setData({ ...data, experience: newExp });
+                            }} 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Section 5: Projects */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <div className="flex justify-between items-center mb-5">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="text-neutral-500">05.</span> Technical Projects
+                </h2>
+                <button 
+                  type="button" 
+                  onClick={addProject}
+                  className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 flex items-center gap-1.5"
+                >
+                  <Plus size={13} /> Add Project
+                </button>
+              </div>
+
+              {data.projects.map((proj, i) => (
+                <div key={i} className="mb-8 border-b border-neutral-800/70 pb-8 last:border-0 last:pb-0 last:mb-0 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <InputField label="Project Title" placeholder="e.g. Distributed Task Queue" value={proj.name} onChange={(v: string) => updateProject(i, "name", v)} />
+                    <InputField label="Technologies Leveraged" placeholder="e.g. Go, Redis, Docker, gRPC" value={proj.technologies} onChange={(v: string) => updateProject(i, "technologies", v)} />
+                    <InputField label="Project Timeline" placeholder="e.g. Oct 2024 – Dec 2024" value={proj.dates} onChange={(v: string) => updateProject(i, "dates", v)} className="sm:col-span-2" />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Project Scope & Technical Details</label>
+                    <textarea 
+                      className="dark-input h-24 resize-none text-xs" 
+                      placeholder="Describe the architecture, problem solved, performance gains, or concurrent users handled..." 
+                      value={proj.description} 
+                      onChange={e => updateProject(i, "description", e.target.value)} 
+                    />
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <button 
+                      type="button" 
+                      onClick={() => enhanceDescription(i, "projects")} 
+                      disabled={loading || !proj.description}
+                      className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-white bg-neutral-900 text-white flex items-center gap-1.5 disabled:opacity-40"
+                    >
+                      <Play size={12} /> {loading ? "Enhancing..." : "Format with AI"}
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => removeProject(i)}
+                      className="text-xs font-mono px-3 py-1.5 rounded border border-red-900/60 text-red-400 hover:bg-red-950/40 flex items-center gap-1"
+                    >
+                      <Trash size={12} /> Remove
+                    </button>
+                  </div>
+
+                  {proj.feedback && (
+                    <div className="bg-amber-950/20 border border-amber-800/40 text-amber-300 p-3.5 rounded text-xs flex gap-2.5 items-start">
+                      <AlertCircle size={15} className="mt-0.5 shrink-0 text-amber-400" />
+                      <p>{proj.feedback}</p>
+                    </div>
+                  )}
+
+                  {proj.bullets.length > 0 && (
+                    <div className="space-y-2 mt-3 bg-neutral-900/50 p-3.5 rounded border border-neutral-800">
+                      <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Engineered Bullets (Editable)</div>
+                      {proj.bullets.map((b, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-2">
+                          <span className="text-neutral-500 text-xs mt-1">•</span>
+                          <input 
+                            className="dark-input !bg-transparent !border-b-neutral-800 !border-t-0 !border-l-0 !border-r-0 !rounded-none !px-0 !py-1 text-xs" 
+                            value={b} 
+                            onChange={(e) => {
+                              const newProj = [...data.projects];
+                              newProj[i].bullets[bIdx] = e.target.value;
+                              setData({ ...data, projects: newProj });
+                            }} 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Section 6: Certifications */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <div className="flex justify-between items-center mb-5">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="text-neutral-500">06.</span> Certifications & Credentials
+                </h2>
+                <button 
+                  type="button" 
+                  onClick={addCertification}
+                  className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 flex items-center gap-1.5"
+                >
+                  <Plus size={13} /> Add Entry
+                </button>
+              </div>
+
+              {data.certifications.map((cert, i) => (
+                <div key={i} className="flex gap-3 items-end mb-4 border-b border-neutral-800/70 pb-4 last:border-0 last:pb-0 last:mb-0">
+                  <InputField label="Certification" placeholder="e.g. AWS Certified Developer" value={cert.name} onChange={(v: string) => updateCertification(i, "name", v)} className="flex-1" />
+                  <InputField label="Issuing Body" placeholder="e.g. Amazon Web Services" value={cert.issuer} onChange={(v: string) => updateCertification(i, "issuer", v)} className="flex-1" />
+                  <InputField label="Date" placeholder="e.g. 2025" value={cert.date} onChange={(v: string) => updateCertification(i, "date", v)} className="w-28" />
+                  <button 
+                    type="button" 
+                    onClick={() => removeCertification(i)}
+                    className="p-2.5 rounded border border-neutral-800 text-neutral-400 hover:text-red-400 hover:border-red-900/60"
+                  >
+                    <Trash size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Section 7: Target Job Match & ATS Optimization */}
+            <div className="border border-neutral-800 bg-neutral-950/40 rounded-lg p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-2">
+                  <span className="text-neutral-500">07.</span> Target Job Match & ATS Parsing
+                </h2>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setJobDescription(sampleJobDescription)}
+                    className="text-[11px] font-mono text-neutral-400 hover:text-white underline underline-offset-2"
+                  >
+                    Load Sample JD
+                  </button>
+                  <span className="text-[10px] font-mono text-neutral-500 uppercase">Optional</span>
+                </div>
+              </div>
+              <textarea
+                className="dark-input h-32 resize-none text-xs font-mono leading-relaxed"
+                placeholder="Paste employer job description here (requirements, tech stack, responsibilities). The ATS engine will calculate exact keyword coverage and identify missing requirements..."
+                value={jobDescription}
+                onChange={(e) => setJobDescription(e.target.value)}
+              />
+            </div>
+
+            {/* Main Action Bar */}
+            <div className="flex flex-wrap gap-4 py-4">
+              <button
+                type="button"
+                onClick={generateResume}
+                disabled={loading}
+                className="flex-1 py-3 px-6 rounded bg-white text-black font-semibold text-sm hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                <FileText size={16} />
+                {loading ? "Compiling LaTeX AST..." : "Generate Final Resume"}
+              </button>
+              <button
+                type="button"
+                onClick={calculateAtsScore}
+                disabled={atsLoading}
+                className="py-3 px-6 rounded border border-neutral-700 bg-neutral-900 text-white font-semibold text-sm hover:border-neutral-500 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                <Target size={16} />
+                {atsLoading ? "Evaluating ATS..." : "Audit ATS Score"}
+              </button>
+            </div>
+
+            {/* ATS Audit Report Panel */}
+            {atsResult && (
+              <div className="border border-neutral-700 bg-neutral-950 rounded-lg p-6 space-y-6" id="ats-scorecard">
+                <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
+                  <div>
+                    <h3 className="text-base font-semibold text-white">ATS Algorithmic Audit</h3>
+                    <p className="text-xs text-neutral-400 font-mono">Simulated parsing under enterprise Applicant Tracking Systems</p>
+                  </div>
+                  <div className="flex items-center gap-4 font-mono">
+                    <div className="text-right">
+                      <div className="text-[10px] text-neutral-500 uppercase">Overall Index</div>
+                      <div className={`text-2xl font-bold ${atsResult.overallScore >= 80 ? 'text-emerald-400' : atsResult.overallScore >= 60 ? 'text-amber-400' : 'text-rose-400'}`}>
+                        {atsResult.overallScore}/100
+                      </div>
+                    </div>
+                    {atsResult.matchRate !== null && atsResult.matchRate !== undefined && (
+                      <div className="text-right border-l border-neutral-800 pl-4">
+                        <div className="text-[10px] text-neutral-500 uppercase">JD Match</div>
+                        <div className={`text-2xl font-bold ${atsResult.matchRate >= 75 ? 'text-emerald-400' : atsResult.matchRate >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                          {atsResult.matchRate}%
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Categories */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {atsResult.breakdown && (
+                    <>
+                      <div className="border border-neutral-800/80 bg-neutral-900/40 p-3.5 rounded">
+                        <div className="flex justify-between text-xs font-mono mb-1.5">
+                          <span className="text-neutral-400">Impact & Metrics</span>
+                          <span className="text-white font-bold">{atsResult.breakdown.impactAndMetrics?.score}/25</span>
+                        </div>
+                        <div className="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden mb-2">
+                          <div className="bg-white h-full" style={{ width: `${(atsResult.breakdown.impactAndMetrics?.score / 25) * 100}%` }} />
+                        </div>
+                        <p className="text-[11px] text-neutral-400">{atsResult.breakdown.impactAndMetrics?.feedback}</p>
+                      </div>
+
+                      <div className="border border-neutral-800/80 bg-neutral-900/40 p-3.5 rounded">
+                        <div className="flex justify-between text-xs font-mono mb-1.5">
+                          <span className="text-neutral-400">Technical Depth</span>
+                          <span className="text-white font-bold">{atsResult.breakdown.technicalSkills?.score}/25</span>
+                        </div>
+                        <div className="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden mb-2">
+                          <div className="bg-emerald-400 h-full" style={{ width: `${(atsResult.breakdown.technicalSkills?.score / 25) * 100}%` }} />
+                        </div>
+                        <p className="text-[11px] text-neutral-400">{atsResult.breakdown.technicalSkills?.feedback}</p>
+                      </div>
+
+                      <div className="border border-neutral-800/80 bg-neutral-900/40 p-3.5 rounded">
+                        <div className="flex justify-between text-xs font-mono mb-1.5">
+                          <span className="text-neutral-400">Action Verbs</span>
+                          <span className="text-white font-bold">{atsResult.breakdown.actionVerbs?.score}/25</span>
+                        </div>
+                        <div className="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden mb-2">
+                          <div className="bg-neutral-300 h-full" style={{ width: `${(atsResult.breakdown.actionVerbs?.score / 25) * 100}%` }} />
+                        </div>
+                        <p className="text-[11px] text-neutral-400">{atsResult.breakdown.actionVerbs?.feedback}</p>
+                      </div>
+
+                      <div className="border border-neutral-800/80 bg-neutral-900/40 p-3.5 rounded">
+                        <div className="flex justify-between text-xs font-mono mb-1.5">
+                          <span className="text-neutral-400">Completeness</span>
+                          <span className="text-white font-bold">{atsResult.breakdown.completeness?.score}/25</span>
+                        </div>
+                        <div className="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden mb-2">
+                          <div className="bg-amber-400 h-full" style={{ width: `${(atsResult.breakdown.completeness?.score / 25) * 100}%` }} />
+                        </div>
+                        <p className="text-[11px] text-neutral-400">{atsResult.breakdown.completeness?.feedback}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Skills tags */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="border border-neutral-800 bg-neutral-900/30 p-3.5 rounded">
+                    <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">Matched Competencies</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {atsResult.matchedSkills?.map((s: string, idx: number) => (
+                        <span key={idx} className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-800/50 text-emerald-300">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border border-neutral-800 bg-neutral-900/30 p-3.5 rounded">
+                    <div className="text-xs font-mono text-rose-400 uppercase tracking-wider mb-2">Missing Target Keywords</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {atsResult.missingSkills?.map((s: string, idx: number) => (
+                        <span key={idx} className="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-950/40 border border-rose-800/50 text-rose-300">
+                          + {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recommendations */}
+                <div className="border border-neutral-800 bg-neutral-900/30 p-3.5 rounded">
+                  <div className="text-xs font-mono text-neutral-300 uppercase tracking-wider mb-2">Actionable Improvements</div>
+                  <ul className="space-y-1.5 text-xs text-neutral-400">
+                    {atsResult.criticalFixes?.map((fix: string, idx: number) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-amber-400 font-mono">→</span>
+                        <span>{fix}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {/* Compiled LaTeX View */}
+            {texCode && (
+              <div className="border border-neutral-800 bg-neutral-950 rounded-lg p-6" id="latex-output">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300">Generated LaTeX Source</h3>
+                  <div className="flex gap-2">
+                    <button onClick={downloadTex} className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 flex items-center gap-1">
+                      <Download size={12} /> .tex
+                    </button>
+                    <a href={`https://latexonline.cc/compile?text=${encodeURIComponent(texCode)}`} target="_blank" rel="noreferrer" className="text-xs font-mono px-3 py-1.5 rounded bg-white text-black font-medium hover:bg-neutral-200 flex items-center gap-1">
+                      <ExternalLink size={12} /> Compile PDF
+                    </a>
+                  </div>
+                </div>
+                <textarea className="dark-input h-64 font-mono text-[11px] leading-relaxed bg-black resize-none" readOnly value={texCode} />
+              </div>
+            )}
+          </div>
+
+
+          {/* ================= RIGHT COLUMN: LIVE WORKSTATION CANVAS ================= */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+            
+            {/* Canvas Header Toolbar */}
+            <div className="flex items-center justify-between border border-neutral-800 bg-neutral-950/80 px-4 py-3 rounded-lg">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span className="font-mono text-xs text-neutral-300 font-medium">LIVE DOCUMENT CANVAS</span>
+              </div>
+              <span className="text-[11px] font-mono text-neutral-500 uppercase">
+                {selectedTemplate === "classic" ? "Template: Classic" : "Template: Bold"}
+              </span>
+            </div>
+
+            {/* Physical A4 Paper Canvas Mirror */}
+            <div className="border border-neutral-800 rounded-lg bg-neutral-900/60 p-4 shadow-2xl">
+              <div className="bg-white text-neutral-900 rounded shadow-md p-8 min-h-[700px] max-h-[calc(100vh-210px)] overflow-y-auto font-serif text-[11px] leading-relaxed">
+                
+                {/* Header */}
+                <div className="text-center border-b border-neutral-300 pb-3 mb-4">
+                  <h2 className="text-xl font-bold tracking-tight text-neutral-950 mb-1">
+                    {data.personal.name || "[Candidate Full Name]"}
+                  </h2>
+                  <div className="text-[10px] text-neutral-600 space-x-1.5 font-sans">
+                    <span>{data.personal.phone || "(555) 000-0000"}</span>
+                    <span>•</span>
+                    <span className="underline">{data.personal.email || "candidate@email.com"}</span>
+                    {data.personal.linkedin && (
+                      <>
+                        <span>•</span>
+                        <span className="underline">LinkedIn</span>
+                      </>
+                    )}
+                    {data.personal.github && (
+                      <>
+                        <span>•</span>
+                        <span className="underline">GitHub</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                {/* Education */}
+                <div className="mb-4">
+                  <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                    Education
+                  </div>
+                  <div className="flex justify-between items-baseline font-sans text-[10.5px]">
+                    <span className="font-bold">{data.education.university || "[University Name]"}</span>
+                    <span className="text-neutral-600">{data.education.location || "City, State"}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline text-[10.5px] italic text-neutral-700">
+                    <span>{data.education.degree || "[Degree Title]"} {data.education.gpa && <span className="font-sans not-italic">| GPA: {data.education.gpa}</span>}</span>
+                    <span className="not-italic font-sans text-neutral-600">{data.education.dates || "Dates"}</span>
+                  </div>
+                </div>
+
+                {/* Technical Skills */}
+                <div className="mb-4">
+                  <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                    Technical Skills
+                  </div>
+                  <div className="font-sans text-[10px] space-y-1">
+                    <div><span className="font-semibold">Languages:</span> {data.skills.languages || "Python, Java, TypeScript, C++"}</div>
+                    <div><span className="font-semibold">Frameworks:</span> {data.skills.frameworks || "React, Next.js, Node.js, Spring Boot"}</div>
+                    <div><span className="font-semibold">Tools:</span> {data.skills.tools || "Git, Docker, AWS, Linux"}</div>
+                    {data.skills.csFundamentals && (
+                      <div><span className="font-semibold">Fundamentals:</span> {data.skills.csFundamentals}</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Experience */}
+                {data.experience.length > 0 && data.experience.some(e => e.title || e.company) && (
+                  <div className="mb-4">
+                    <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                      Experience
+                    </div>
+                    {data.experience.map((exp, idx) => (
+                      <div key={idx} className="mb-3 last:mb-0">
+                        <div className="flex justify-between items-baseline font-sans text-[10.5px]">
+                          <span className="font-bold">{exp.title || "Software Engineering Role"}</span>
+                          <span className="text-neutral-600">{exp.dates || "Dates"}</span>
+                        </div>
+                        <div className="flex justify-between items-baseline text-[10.5px] italic text-neutral-700 mb-1">
+                          <span>{exp.company || "Company Name"}</span>
+                          <span className="not-italic font-sans text-neutral-600">{exp.location || "Location"}</span>
+                        </div>
+                        {exp.bullets.length > 0 ? (
+                          <ul className="list-disc list-inside text-[10px] text-neutral-800 space-y-0.5">
+                            {exp.bullets.map((b, bIdx) => (
+                              <li key={bIdx}>{b}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-[10px] text-neutral-500 italic">
+                            {exp.description ? "Click 'Format with AI' to generate bullet points." : "[Role description & quantified achievements...]"}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Projects */}
+                {data.projects.length > 0 && data.projects.some(p => p.name) && (
+                  <div className="mb-4">
+                    <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                      Projects
+                    </div>
+                    {data.projects.map((proj, idx) => (
+                      <div key={idx} className="mb-3 last:mb-0">
+                        <div className="flex justify-between items-baseline font-sans text-[10.5px]">
+                          <span className="font-bold">{proj.name || "Project Name"}</span>
+                          <span className="text-neutral-600">{proj.dates || "Timeline"}</span>
+                        </div>
+                        <div className="text-[10px] italic text-neutral-700 mb-1">
+                          {proj.technologies || "Tech Stack"}
+                        </div>
+                        {proj.bullets.length > 0 ? (
+                          <ul className="list-disc list-inside text-[10px] text-neutral-800 space-y-0.5">
+                            {proj.bullets.map((b, bIdx) => (
+                              <li key={bIdx}>{b}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-[10px] text-neutral-500 italic">
+                            {proj.description ? "Click 'Format with AI' to generate bullet points." : "[Project achievements & system architecture...]"}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Certifications */}
+                {data.certifications.length > 0 && data.certifications.some(c => c.name) && (
+                  <div>
+                    <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                      Certifications
+                    </div>
+                    {data.certifications.map((cert, idx) => (
+                      <div key={idx} className="flex justify-between items-baseline text-[10px] font-sans">
+                        <span><strong className="font-semibold">{cert.name}</strong> – {cert.issuer}</span>
+                        <span className="text-neutral-600">{cert.date}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Quick Helper Bar */}
+            <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500 px-2">
+              <span>Auto-synced with editor</span>
+              <span>8.5" × 11" US Letter Ratio</span>
+            </div>
+          </div>
+
         </div>
       </main>
+
+      {/* Footer with Legal Policies */}
+      <footer className="border-t border-neutral-800 bg-neutral-950 mt-20 py-8 text-xs text-neutral-500 font-mono">
+        <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-neutral-400 font-medium">ResumeBuilder</span>
+            <span>•</span>
+            <span>Client-First LaTeX Compiler Workstation</span>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <button 
+              type="button" 
+              onClick={() => setActiveModal('privacy')}
+              className="hover:text-neutral-300 transition-colors cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+            <button 
+              type="button" 
+              onClick={() => setActiveModal('terms')}
+              className="hover:text-neutral-300 transition-colors cursor-pointer"
+            >
+              Terms & Conditions
+            </button>
+            <span className="text-neutral-600">MIT Open Source</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* Privacy Policy & Terms Modal */}
+      {activeModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="border border-neutral-800 bg-neutral-950 rounded-lg max-w-2xl w-full p-6 max-h-[85vh] overflow-y-auto space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-neutral-800 pb-3">
+              <h3 className="text-base font-semibold text-white">
+                {activeModal === 'privacy' ? 'Privacy Policy' : 'Terms and Conditions'}
+              </h3>
+              <button 
+                type="button" 
+                onClick={() => setActiveModal(null)}
+                className="p-1 rounded text-neutral-400 hover:text-white border border-neutral-800 hover:border-neutral-700 cursor-pointer"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {activeModal === 'privacy' ? (
+              <div className="text-xs text-neutral-300 space-y-3 leading-relaxed font-sans">
+                <p><strong>Effective Date:</strong> 2026</p>
+                <p>ResumeBuilder operates strictly on a client-first, privacy-respecting architecture:</p>
+                
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">1. Local Storage Only</h4>
+                <p>All resume fields, candidate identification, and credentials you input are stored strictly inside your browser's local storage (localStorage). We do not operate remote user databases, tracking cookies, or commercial telemetry.</p>
+
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">2. AI Inference Processing</h4>
+                <p>When you explicitly trigger "Format with AI" or "Run ATS Check", your submitted resume text is transmitted securely over encrypted HTTPS directly to the Google Gemini API for stateless inference. Neither ResumeBuilder nor third-party data brokers store, log, or sell this content.</p>
+
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">3. Data Deletion</h4>
+                <p>You can permanently delete all cached information at any moment by clicking the Reset button in the top navigation bar or clearing your browser's local storage.</p>
+              </div>
+            ) : (
+              <div className="text-xs text-neutral-300 space-y-3 leading-relaxed font-sans">
+                <p><strong>Effective Date:</strong> 2026</p>
+
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">1. Acceptance & Permitted Use</h4>
+                <p>By using ResumeBuilder, you agree to these terms. The platform is provided as an open developer workstation for drafting, compiling, and formatting professional resumes.</p>
+
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">2. Ownership of Artifacts</h4>
+                <p>You retain full intellectual property ownership of all resume content, generated LaTeX source code, and compiled documents created using this service.</p>
+
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">3. Disclaimer of ATS Outcomes</h4>
+                <p>The ATS Audit Report provides algorithmic keyword matching estimates based on standard software engineering heuristics. ResumeBuilder does not guarantee interview callbacks, employment offers, or compatibility with specific proprietary recruiting software.</p>
+
+                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">4. Software License</h4>
+                <p>The software is provided "as is", without warranty of any kind, express or implied, under the standard MIT Open Source License.</p>
+              </div>
+            )}
+
+            <div className="pt-3 border-t border-neutral-800 text-right">
+              <button
+                type="button"
+                onClick={() => setActiveModal(null)}
+                className="px-4 py-1.5 rounded bg-white text-black font-medium text-xs hover:bg-neutral-200 transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

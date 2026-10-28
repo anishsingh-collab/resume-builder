@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ResumeBuilder — Engineering LaTeX Workstation & ATS Evaluator
+
+A high-performance, full-stack developer workstation designed to convert structured career credentials into ATS-compliant, compile-ready LaTeX resumes in real-time. Features automated LLM bullet point enhancement, dual-mode algorithmic ATS scoring against job descriptions, and a synchronized split-screen document canvas.
+
+---
+
+## Key Features
+
+- **Split-Screen Reactive Workstation:** Full-width two-column layout providing real-time document mirroring on a physical A4 paper canvas as you type.
+- **Deterministic LaTeX Compilation Engine:** Server-side document compiler built with **Handlebars (`hbs`)**, featuring automated character escaping (`&`, `%`, `$`, `_`, `#`) to eliminate LaTeX compilation syntax errors.
+- **Dual Industry-Standard Templates:**
+  - `Template 01: Classic Tech` — Inspired by Jake's Resume standard format with horizontal rules and single-column ATS layout.
+  - `Template 02: Bold Compact` — Dense tabular skill matrix layout optimized for maximum content density.
+- **Dual-Mode ATS Evaluator:**
+  - **Job Description Mode:** Compares candidate resumes against real employer job postings, computing keyword match rates and identifying missing requirements.
+  - **Generic Mode:** Benchmarks candidate profiles against modern software engineering entry-level ATS criteria across 4 dimensions: *Quantifiable Impact*, *Technical Depth*, *Action Verbs*, and *Structural Completeness*.
+- **Iterative AI Feedback Loop:** Powered by **Google Gemini (`gemini-3.6-flash`)**, analyzing bullet point vagueness with follow-up critique prompts before generating measurable, impact-driven bullet points.
+- **Local-First & Privacy-Focused:** Automated background persistence via browser `localStorage` ensuring zero accidental data loss. No user accounts, tracking cookies, or remote databases.
+- **One-Click Demo Profile:** Single-click sample profile loader to immediately inspect, test, and audit the platform.
+
+---
+
+## Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/) (App Router, React 19)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **AI Orchestration:** [Google Gen AI SDK](https://www.npmjs.com/package/@google/generative-ai) (`gemini-3.6-flash`)
+- **Document Templating:** [Handlebars.js](https://handlebarsjs.com/)
+- **UI Primitives & Icons:** [Lucide React](https://lucide.dev/), [React Select](https://react-select.com/)
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/<your-username>/resume-builder.git
+cd resume-builder
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configure environment variables
+Create a `.env.local` file in the root directory:
+```bash
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+*(Get a free Gemini API key from [Google AI Studio](https://aistudio.google.com/)).*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run the development server
+```bash
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Production Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npm run start
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Distributed under the [MIT License](LICENSE).

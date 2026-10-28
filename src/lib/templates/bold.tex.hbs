@@ -1,0 +1,101 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{geometry}
+\geometry{left=0.5in, top=0.5in, right=0.5in, bottom=0.5in}
+
+\pagestyle{empty}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{
+  \vspace{-4pt}\bfseries\uppercase\large
+}{}{0em}{}[\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{2pt}\item[]
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{#3} & \textit{#4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\begin{document}
+
+% Header
+\begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
+  \textbf{\Large {{personal.name}}} & \href{{{personal.linkedin}}}{LinkedIn} \\
+  {{personal.email}} $|$ {{personal.phone}} & \href{{{personal.github}}}{GitHub} \\
+\end{tabular*}
+\vspace{4pt}
+
+\section{Education}
+  \begin{itemize}[leftmargin=0pt, label={}]
+    \resumeSubheading
+      {{{education.university}}}{{{education.dates}}}
+      {{{education.degree}} \textbf{GPA: {{education.gpa}}}}{{{education.location}}}
+  \end{itemize}
+
+\section{Skills}
+ \begin{tabular}{ @{} >{\bfseries}l @{\hspace{2ex}} l }
+    Languages: & {{skills.languages}} \\
+    Frameworks: & {{skills.frameworks}} \\
+    Tools: & {{skills.tools}} \\
+    {{#if skills.csFundamentals}}
+    Concepts: & {{skills.csFundamentals}} \\
+    {{/if}}
+ \end{tabular}
+ \vspace{4pt}
+
+{{#if experience}}
+\section{Work Experience}
+  \begin{itemize}[leftmargin=0pt, label={}]
+    {{#each experience}}
+    \vspace{2pt}\item[]
+      \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{{{title}}, {{company}}} & {{dates}} \\
+      \end{tabular*}\vspace{-5pt}
+      {{#if bullets}}
+      \begin{itemize}
+        {{#each bullets}}
+        \item {{this}}
+        {{/each}}
+      \end{itemize}
+      {{/if}}
+    {{/each}}
+  \end{itemize}
+{{/if}}
+
+{{#if projects}}
+\section{Projects}
+  \begin{itemize}[leftmargin=0pt, label={}]
+    {{#each projects}}
+    \vspace{2pt}\item[]
+      \textbf{{{name}}}: \emph{{{technologies}}} $|$ {{dates}}
+      {{#if bullets}}
+      \begin{itemize}
+        {{#each bullets}}
+        \item {{this}}
+        {{/each}}
+      \end{itemize}
+      {{/if}}
+    {{/each}}
+  \end{itemize}
+{{/if}}
+
+{{#if certifications}}
+\section{Certifications}
+  \begin{itemize}[leftmargin=0pt, label={}]
+    {{#each certifications}}
+    \vspace{2pt}\item[]
+      \textbf{{{name}}} - {{issuer}} \hfill {{date}}
+    {{/each}}
+  \end{itemize}
+{{/if}}
+
+\end{document}
