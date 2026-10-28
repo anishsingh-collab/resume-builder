@@ -1031,7 +1031,7 @@ export default function Home() {
                 {selectedTemplate === "placement" ? (
                   <div>
                     {/* Header: Candidate Photo | Candidate Name + Role + Contact Details | SNU Official Logo */}
-                    <div className="flex items-start justify-between pb-3 mb-3 border-b-2 border-neutral-900">
+                    <div className="flex items-start justify-between pb-3 mb-3 border-b border-neutral-300">
                       {/* Photo */}
                       <div className="shrink-0 mr-4 select-none">
                         <img 
@@ -1043,20 +1043,20 @@ export default function Home() {
 
                       {/* Name, Role & 2-Column Contact Info */}
                       <div className="flex-1 pr-4">
-                        <h2 className="text-xl font-bold tracking-tight text-neutral-950 font-sans">
+                        <h2 className="text-xl font-bold tracking-tight text-neutral-900 font-sans">
                           {data.personal.name || "Candidate Name"}
                         </h2>
-                        <div className="text-xs font-semibold text-neutral-700 tracking-wide mt-0.5 mb-2.5 font-sans">
+                        <div className="text-xs font-medium text-neutral-600 tracking-wide mt-0.5 mb-2.5 font-sans">
                           {data.personal.role || "Engineer"}
                         </div>
 
                         {/* 2-Column Contact Details */}
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[9.5px] font-sans text-neutral-800">
-                          <div><strong className="font-semibold text-neutral-950">Phone:</strong> {data.personal.phone || "+123-456-7890"}</div>
-                          <div><strong className="font-semibold text-neutral-950">Address:</strong> {data.personal.address || "123 Anywhere St., Any City"}</div>
-                          <div><strong className="font-semibold text-neutral-950">Email:</strong> {data.personal.email || "hello@reallygreatsite.com"}</div>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[9.5px] font-sans text-neutral-700">
+                          <div><strong className="font-semibold text-neutral-800">Phone:</strong> {data.personal.phone || "+123-456-7890"}</div>
+                          <div><strong className="font-semibold text-neutral-800">Address:</strong> {data.personal.address || "123 Anywhere St., Any City"}</div>
+                          <div><strong className="font-semibold text-neutral-800">Email:</strong> {data.personal.email || "hello@reallygreatsite.com"}</div>
                           {data.personal.github && (
-                            <div><strong className="font-semibold text-neutral-950">GitHub:</strong> {data.personal.github}</div>
+                            <div><strong className="font-semibold text-neutral-800">GitHub:</strong> {data.personal.github}</div>
                           )}
                         </div>
                       </div>
@@ -1073,25 +1073,25 @@ export default function Home() {
 
                     {/* PROFILE */}
                     {data.personal.summary && (
-                      <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
-                        <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950">PROFILE</div>
-                        <div className="col-span-9 text-[10px] text-neutral-800 leading-relaxed text-justify">
+                      <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-200 font-sans">
+                        <div className="col-span-3 text-[10.5px] font-semibold uppercase tracking-wider text-neutral-800">PROFILE</div>
+                        <div className="col-span-9 text-[10px] text-neutral-700 leading-relaxed text-justify">
                           {data.personal.summary}
                         </div>
                       </div>
                     )}
 
                     {/* EDUCATION */}
-                    <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
-                      <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950">EDUCATION</div>
-                      <div className="col-span-9 space-y-3 text-[10px] text-neutral-800">
+                    <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-200 font-sans">
+                      <div className="col-span-3 text-[10.5px] font-semibold uppercase tracking-wider text-neutral-800">EDUCATION</div>
+                      <div className="col-span-9 space-y-3 text-[10px] text-neutral-700">
                         {/* College */}
                         <div>
-                          <div className="font-bold text-neutral-950">
-                            {data.education.university || "Sister Nivedita University"} {data.education.dates && <span className="font-normal text-neutral-600">| {data.education.dates}</span>}
+                          <div className="font-semibold text-neutral-900">
+                            {data.education.university || "Sister Nivedita University"} {data.education.dates && <span className="font-normal text-neutral-500">| {data.education.dates}</span>}
                           </div>
-                          <div className="text-neutral-700">{data.education.degree || "Bachelor of Science in Mechanical Engineering"}</div>
-                          <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-700">
+                          <div className="text-neutral-600">{data.education.degree || "Bachelor of Science in Mechanical Engineering"}</div>
+                          <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-600">
                             {data.education.gpa && <li>CGPA / Score: {data.education.gpa}</li>}
                             {data.education.awards && <li>{data.education.awards}</li>}
                           </ul>
@@ -1100,11 +1100,11 @@ export default function Home() {
                         {/* 12th */}
                         {data.education.school12 && (
                           <div>
-                            <div className="font-bold text-neutral-950">
-                              {data.education.school12} {data.education.dates12 && <span className="font-normal text-neutral-600">| {data.education.dates12}</span>}
+                            <div className="font-semibold text-neutral-900">
+                              {data.education.school12} {data.education.dates12 && <span className="font-normal text-neutral-500">| {data.education.dates12}</span>}
                             </div>
-                            <div className="text-neutral-700">Higher Secondary (12th)</div>
-                            <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-neutral-700">
+                            <div className="text-neutral-600">Higher Secondary (12th)</div>
+                            <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-neutral-600">
                               {data.education.board12 && <li>Board: {data.education.board12}</li>}
                               {data.education.percentage12 && <li>Percentage: {data.education.percentage12}</li>}
                               {data.education.stream12 && <li>Stream: {data.education.stream12}</li>}
@@ -1115,11 +1115,11 @@ export default function Home() {
                         {/* 10th */}
                         {data.education.school10 && (
                           <div>
-                            <div className="font-bold text-neutral-950">
-                              {data.education.school10} {data.education.dates10 && <span className="font-normal text-neutral-600">| {data.education.dates10}</span>}
+                            <div className="font-semibold text-neutral-900">
+                              {data.education.school10} {data.education.dates10 && <span className="font-normal text-neutral-500">| {data.education.dates10}</span>}
                             </div>
-                            <div className="text-neutral-700">Secondary (10th)</div>
-                            <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-neutral-700">
+                            <div className="text-neutral-600">Secondary (10th)</div>
+                            <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-neutral-600">
                               {data.education.board10 && <li>Board: {data.education.board10}</li>}
                               {data.education.percentage10 && <li>Percentage: {data.education.percentage10}</li>}
                             </ul>
@@ -1129,45 +1129,45 @@ export default function Home() {
                     </div>
 
                     {/* PROFESSIONAL EXPERIENCE / PROJECTS */}
-                    <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
-                      <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950 leading-tight">
+                    <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-200 font-sans">
+                      <div className="col-span-3 text-[10.5px] font-semibold uppercase tracking-wider text-neutral-800 leading-tight">
                         PROFESSIONAL EXPERIENCE / PROJECTS
                       </div>
-                      <div className="col-span-9 space-y-3 text-[10px] text-neutral-800">
+                      <div className="col-span-9 space-y-3 text-[10px] text-neutral-700">
                         {data.experience.map((exp, idx) => (
                           <div key={idx}>
-                            <div className="font-bold text-neutral-950">
-                              {exp.title || "Mechanical Engineer"} {exp.dates && <span className="font-normal text-neutral-600">| {exp.dates}</span>}
+                            <div className="font-semibold text-neutral-900">
+                              {exp.title || "Mechanical Engineer"} {exp.dates && <span className="font-normal text-neutral-500">| {exp.dates}</span>}
                             </div>
-                            <div className="italic text-neutral-700">
+                            <div className="italic text-neutral-600">
                               {exp.company || "Company Name"} {exp.location && <span>— {exp.location}</span>}
                             </div>
                             {exp.bullets.length > 0 ? (
-                              <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-700">
+                              <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-600">
                                 {exp.bullets.map((b, bIdx) => (
                                   <li key={bIdx}>{b}</li>
                                 ))}
                               </ul>
                             ) : exp.description ? (
-                              <p className="mt-1 text-neutral-700">{exp.description}</p>
+                              <p className="mt-1 text-neutral-600">{exp.description}</p>
                             ) : null}
                           </div>
                         ))}
 
                         {data.projects.map((proj, idx) => (
                           <div key={idx}>
-                            <div className="font-bold text-neutral-950">
-                              {proj.name || "Project Title"} {proj.dates && <span className="font-normal text-neutral-600">| {proj.dates}</span>}
+                            <div className="font-semibold text-neutral-900">
+                              {proj.name || "Project Title"} {proj.dates && <span className="font-normal text-neutral-500">| {proj.dates}</span>}
                             </div>
-                            <div className="italic text-neutral-700">{proj.technologies}</div>
+                            <div className="italic text-neutral-600">{proj.technologies}</div>
                             {proj.bullets.length > 0 ? (
-                              <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-700">
+                              <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-600">
                                 {proj.bullets.map((b, bIdx) => (
                                   <li key={bIdx}>{b}</li>
                                 ))}
                               </ul>
                             ) : proj.description ? (
-                              <p className="mt-1 text-neutral-700">{proj.description}</p>
+                              <p className="mt-1 text-neutral-600">{proj.description}</p>
                             ) : null}
                           </div>
                         ))}
@@ -1176,17 +1176,17 @@ export default function Home() {
 
                     {/* CERTIFICATES / ACHIEVEMENTS */}
                     {data.certifications.length > 0 && data.certifications.some(c => c.name) && (
-                      <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
-                        <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950 leading-tight">
+                      <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-200 font-sans">
+                        <div className="col-span-3 text-[10.5px] font-semibold uppercase tracking-wider text-neutral-800 leading-tight">
                           CERTIFICATES / ACHIEVEMENTS
                         </div>
-                        <div className="col-span-9 grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-neutral-800">
+                        <div className="col-span-9 grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-neutral-700">
                           {data.certifications.map((cert, idx) => (
                             <div key={idx}>
-                              <div className="font-bold text-neutral-950">
-                                {cert.name} {cert.date && <span className="font-normal text-neutral-600">| {cert.date}</span>}
+                              <div className="font-semibold text-neutral-900">
+                                {cert.name} {cert.date && <span className="font-normal text-neutral-500">| {cert.date}</span>}
                               </div>
-                              <div className="italic text-[9.5px] text-neutral-600">{cert.issuer}</div>
+                              <div className="italic text-[9.5px] text-neutral-500">{cert.issuer}</div>
                             </div>
                           ))}
                         </div>
@@ -1195,15 +1195,15 @@ export default function Home() {
 
                     {/* SKILLS */}
                     <div className="grid grid-cols-12 gap-3 py-3 font-sans">
-                      <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950">SKILLS</div>
-                      <div className="col-span-9 grid grid-cols-2 gap-4 text-[10px] text-neutral-800">
+                      <div className="col-span-3 text-[10.5px] font-semibold uppercase tracking-wider text-neutral-800">SKILLS</div>
+                      <div className="col-span-9 grid grid-cols-2 gap-4 text-[10px] text-neutral-700">
                         <ul className="list-disc list-inside space-y-1">
-                          {data.skills.languages && <li><strong className="font-semibold">Languages:</strong> {data.skills.languages}</li>}
-                          {data.skills.frameworks && <li><strong className="font-semibold">Frameworks:</strong> {data.skills.frameworks}</li>}
-                          {data.skills.tools && <li><strong className="font-semibold">Tools:</strong> {data.skills.tools}</li>}
+                          {data.skills.languages && <li><strong className="font-medium text-neutral-800">Languages:</strong> {data.skills.languages}</li>}
+                          {data.skills.frameworks && <li><strong className="font-medium text-neutral-800">Frameworks:</strong> {data.skills.frameworks}</li>}
+                          {data.skills.tools && <li><strong className="font-medium text-neutral-800">Tools:</strong> {data.skills.tools}</li>}
                         </ul>
                         <ul className="list-disc list-inside space-y-1">
-                          {data.skills.csFundamentals && <li><strong className="font-semibold">Core Concepts:</strong> {data.skills.csFundamentals}</li>}
+                          {data.skills.csFundamentals && <li><strong className="font-medium text-neutral-800">Core Concepts:</strong> {data.skills.csFundamentals}</li>}
                           <li>Problem-solving & analytical thinking</li>
                           <li>Teamwork & technical communication</li>
                         </ul>
