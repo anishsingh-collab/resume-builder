@@ -992,38 +992,43 @@ export default function Home() {
                 
                 {selectedTemplate === "placement" ? (
                   <div>
-                    {/* Header: Photo Box | Candidate Name + Title | SNU Branding */}
-                    <div className="flex items-center justify-between border-b-2 border-neutral-900 pb-3 mb-3">
-                      {/* Photo Placeholder */}
-                      <div className="w-16 h-20 border-2 border-dashed border-neutral-300 rounded flex flex-col items-center justify-center text-[9px] text-neutral-400 bg-neutral-50 shrink-0 select-none">
-                        <span>Photo</span>
+                    {/* Header: Candidate Photo | Candidate Name + Role + Contact Details | SNU Official Logo */}
+                    <div className="flex items-start justify-between pb-3 mb-3 border-b-2 border-neutral-900">
+                      {/* Photo */}
+                      <div className="shrink-0 mr-4 select-none">
+                        <img 
+                          src="/candidate_photo.jpg" 
+                          alt={data.personal.name || "Candidate Photo"} 
+                          className="w-20 h-24 object-cover rounded shadow-sm border border-neutral-300"
+                        />
                       </div>
 
-                      {/* Name & Title */}
-                      <div className="flex-1 px-5">
-                        <h2 className="text-xl font-bold tracking-tight text-neutral-950 uppercase font-sans">
+                      {/* Name, Role & 2-Column Contact Info */}
+                      <div className="flex-1 pr-4">
+                        <h2 className="text-xl font-bold tracking-tight text-neutral-950 font-sans">
                           {data.personal.name || "Candidate Name"}
                         </h2>
-                        <div className="text-xs font-medium text-neutral-700 tracking-wide mt-0.5 font-sans">
+                        <div className="text-xs font-semibold text-neutral-700 tracking-wide mt-0.5 mb-2.5 font-sans">
                           {data.personal.role || "Engineer"}
+                        </div>
+
+                        {/* 2-Column Contact Details */}
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[9.5px] font-sans text-neutral-800">
+                          <div><strong className="font-semibold text-neutral-950">Phone:</strong> {data.personal.phone || "+123-456-7890"}</div>
+                          <div><strong className="font-semibold text-neutral-950">Address:</strong> {data.personal.address || "123 Anywhere St., Any City"}</div>
+                          <div><strong className="font-semibold text-neutral-950">Email:</strong> {data.personal.email || "hello@reallygreatsite.com"}</div>
+                          <div><strong className="font-semibold text-neutral-950">Portfolio:</strong> {data.personal.portfolio || data.personal.github || "www.reallygreatsite.com"}</div>
                         </div>
                       </div>
 
-                      {/* University & Group Branding */}
-                      <div className="text-right shrink-0 font-sans select-none">
-                        <div className="text-[7px] text-neutral-500 uppercase tracking-tight">A Satyam Roychowdhury Initiative</div>
-                        <div className="text-lg font-black tracking-tight text-neutral-950 leading-none mt-0.5">SNU</div>
-                        <div className="text-[7.5px] font-bold text-neutral-800 tracking-tight leading-tight">SISTER NIVEDITA</div>
-                        <div className="text-[7.5px] font-bold text-neutral-800 tracking-tight leading-tight">UNIVERSITY</div>
+                      {/* Official SNU College Logo from PDF */}
+                      <div className="shrink-0 text-right select-none">
+                        <img 
+                          src="/snu_college_logo.png" 
+                          alt="Sister Nivedita University - A Satyam Roychowdhury Initiative" 
+                          className="h-14 w-auto object-contain max-w-[150px]" 
+                        />
                       </div>
-                    </div>
-
-                    {/* Contact Details (2 Columns) */}
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[10px] font-sans pb-3 mb-3 border-b border-neutral-300 text-neutral-800">
-                      <div><strong className="font-semibold text-neutral-950">Phone:</strong> {data.personal.phone || "+91-00000-00000"}</div>
-                      <div><strong className="font-semibold text-neutral-950">Address:</strong> {data.personal.address || "Kolkata, WB"}</div>
-                      <div><strong className="font-semibold text-neutral-950">Email:</strong> {data.personal.email || "hello@reallygreatsite.com"}</div>
-                      <div><strong className="font-semibold text-neutral-950">Portfolio / GitHub:</strong> {data.personal.portfolio || data.personal.github || "github.com/candidate"}</div>
                     </div>
 
                     {/* PROFILE */}
