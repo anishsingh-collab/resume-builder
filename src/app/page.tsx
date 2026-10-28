@@ -524,9 +524,8 @@ export default function Home() {
                 <InputField label="Email Address" placeholder="e.g. hello@reallygreatsite.com" value={data.personal.email} onChange={(v: string) => updatePersonal("email", v)} />
                 <InputField label="Phone Number" placeholder="e.g. +91 98765 43210" value={data.personal.phone} onChange={(v: string) => updatePersonal("phone", v)} />
                 <InputField label="Address / Current Location" placeholder="e.g. Kolkata, West Bengal" value={data.personal.address} onChange={(v: string) => updatePersonal("address", v)} />
-                <InputField label="Portfolio / Website URL" placeholder="e.g. www.reallygreatsite.com" value={data.personal.portfolio} onChange={(v: string) => updatePersonal("portfolio", v)} />
                 <InputField label="LinkedIn Handle / URL" placeholder="e.g. linkedin.com/in/samiramehta" value={data.personal.linkedin} onChange={(v: string) => updatePersonal("linkedin", v)} />
-                <InputField label="GitHub Profile URL" placeholder="e.g. github.com/samiramehta" value={data.personal.github} onChange={(v: string) => updatePersonal("github", v)} />
+                <InputField label="GitHub Profile URL" placeholder="e.g. github.com/samiramehta" value={data.personal.github} onChange={(v: string) => updatePersonal("github", v)} className="sm:col-span-2" />
                 <div className="sm:col-span-2">
                   <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Profile Summary / Career Objective</label>
                   <textarea 
@@ -1056,7 +1055,9 @@ export default function Home() {
                           <div><strong className="font-semibold text-neutral-950">Phone:</strong> {data.personal.phone || "+123-456-7890"}</div>
                           <div><strong className="font-semibold text-neutral-950">Address:</strong> {data.personal.address || "123 Anywhere St., Any City"}</div>
                           <div><strong className="font-semibold text-neutral-950">Email:</strong> {data.personal.email || "hello@reallygreatsite.com"}</div>
-                          <div><strong className="font-semibold text-neutral-950">Portfolio:</strong> {data.personal.portfolio || data.personal.github || "www.reallygreatsite.com"}</div>
+                          {data.personal.github && (
+                            <div><strong className="font-semibold text-neutral-950">GitHub:</strong> {data.personal.github}</div>
+                          )}
                         </div>
                       </div>
 

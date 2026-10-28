@@ -37,7 +37,7 @@
   {\large \textbf{ {{#if personal.role}}{{personal.role}}{{else}}Engineer{{/if}} }} \vspace{0.25cm} \\
   \begin{tabular}{@{}ll@{}}
     \textbf{Phone:} {{personal.phone}} & \textbf{Address:} {{#if personal.address}}{{personal.address}}{{else}}India{{/if}} \\
-    \textbf{Email:} {{personal.email}} & \textbf{Portfolio:} {{#if personal.portfolio}}{{personal.portfolio}}{{else}}{{personal.github}}{{/if}} \\
+    \textbf{Email:} {{personal.email}} & {{#if personal.github}}\textbf{GitHub:} {{personal.github}}{{/if}} \\
   \end{tabular}
 \end{minipage}%
 \hfill
