@@ -325,6 +325,9 @@ export default function Home() {
       const result = await res.json();
       if (result.tex) {
         setTexCode(result.tex);
+        setTimeout(() => {
+          document.getElementById('latex-output')?.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
       } else {
         alert("Failed to generate LaTeX");
       }
@@ -343,6 +346,26 @@ export default function Home() {
     a.download = 'resume.tex';
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const openInOverleaf = () => {
+    if (!texCode) return;
+    const form = document.createElement('form');
+    form.action = 'https://www.overleaf.com/docs';
+    form.method = 'POST';
+    form.target = '_blank';
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'snip';
+    input.value = texCode;
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   const calculateAtsScore = async () => {
@@ -954,16 +977,22 @@ export default function Home() {
 
             {/* Compiled LaTeX View */}
             {texCode && (
-              <div className="border border-neutral-800 bg-neutral-950 rounded-lg p-6" id="latex-output">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300">Generated LaTeX Source</h3>
-                  <div className="flex gap-2">
+              <div className="border border-neutral-800 bg-neutral-950 rounded-lg p-6 print-hide" id="latex-output">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                  <div>
+                    <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300">Generated LaTeX Source</h3>
+                    <p className="text-[11px] text-neutral-500 font-mono">LaTeX code compiled successfully. Export to Overleaf or save as PDF.</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
                     <button onClick={downloadTex} className="text-xs font-mono px-3 py-1.5 rounded border border-neutral-700 hover:border-neutral-500 bg-neutral-900 text-neutral-300 flex items-center gap-1">
                       <Download size={12} /> .tex
                     </button>
-                    <a href={`https://latexonline.cc/compile?text=${encodeURIComponent(texCode)}`} target="_blank" rel="noreferrer" className="text-xs font-mono px-3 py-1.5 rounded bg-white text-black font-medium hover:bg-neutral-200 flex items-center gap-1">
-                      <ExternalLink size={12} /> Compile PDF
-                    </a>
+                    <button onClick={openInOverleaf} className="text-xs font-mono px-3.5 py-1.5 rounded bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors flex items-center gap-1.5" title="Open complete document directly in Overleaf without length limits">
+                      <ExternalLink size={12} /> Open in Overleaf
+                    </button>
+                    <button onClick={handlePrint} className="text-xs font-mono px-3.5 py-1.5 rounded bg-white text-black font-medium hover:bg-neutral-200 transition-colors flex items-center gap-1.5">
+                      <Download size={12} /> Print / Save PDF
+                    </button>
                   </div>
                 </div>
                 <textarea className="dark-input h-64 font-mono text-[11px] leading-relaxed bg-black resize-none" readOnly value={texCode} />
@@ -976,19 +1005,29 @@ export default function Home() {
           <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
             
             {/* Canvas Header Toolbar */}
-            <div className="flex items-center justify-between border border-neutral-800 bg-neutral-950/80 px-4 py-3 rounded-lg">
+            <div className="flex items-center justify-between border border-neutral-800 bg-neutral-950/80 px-4 py-3 rounded-lg print-hide">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
                 <span className="font-mono text-xs text-neutral-300 font-medium">LIVE DOCUMENT CANVAS</span>
               </div>
-              <span className="text-[11px] font-mono text-neutral-500 uppercase">
-                {selectedTemplate === "classic" ? "Template: Classic Tech" : selectedTemplate === "bold" ? "Template: Bold Compact" : "Template: SNU Placement"}
-              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handlePrint}
+                  className="text-xs font-mono font-medium px-3 py-1 rounded bg-white text-black hover:bg-neutral-200 transition-colors flex items-center gap-1"
+                  title="Print or Save A4 PDF directly from canvas"
+                >
+                  <Download size={12} /> Print / Save PDF
+                </button>
+                <span className="text-[11px] font-mono text-neutral-500 uppercase">
+                  {selectedTemplate === "classic" ? "Template: Classic Tech" : selectedTemplate === "bold" ? "Template: Bold Compact" : "Template: SNU Placement"}
+                </span>
+              </div>
             </div>
 
             {/* Physical A4 Paper Canvas Mirror */}
-            <div className="border border-neutral-800 rounded-lg bg-neutral-900/60 p-4 shadow-2xl">
-              <div className="bg-white text-neutral-900 rounded shadow-md p-8 min-h-[700px] max-h-[calc(100vh-210px)] overflow-y-auto font-serif text-[11px] leading-relaxed">
+            <div className="border border-neutral-800 rounded-lg bg-neutral-900/60 p-4 shadow-2xl" id="resume-canvas-wrapper">
+              <div className="bg-white text-neutral-900 rounded shadow-md p-8 min-h-[700px] max-h-[calc(100vh-210px)] overflow-y-auto font-serif text-[11px] leading-relaxed" id="resume-canvas-paper">
                 
                 {selectedTemplate === "placement" ? (
                   <div>

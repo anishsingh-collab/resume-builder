@@ -128,3 +128,46 @@
   font-size: 1.08em;
   letter-spacing: -0.03em;
 }
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0.5in;
+  }
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  header, footer, main > div > div:first-child, .print-hide {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  main > div {
+    display: block !important;
+  }
+  main > div > div:last-child {
+    width: 100% !important;
+    position: static !important;
+    padding: 0 !important;
+  }
+  #resume-canvas-wrapper {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  #resume-canvas-paper {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-height: none !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+}

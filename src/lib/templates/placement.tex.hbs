@@ -2,18 +2,14 @@
 \usepackage[empty]{fullpage}
 \usepackage{geometry}
 \geometry{left=0.6in, top=0.5in, right=0.6in, bottom=0.5in}
-\usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
-\usepackage{titlesec}
-\usepackage{array}
 
 \pagestyle{empty}
 \raggedbottom
 \raggedright
-\setlength{\tabcolsep}{0in}
 
 % Bullet styling
 \setlist[itemize]{leftmargin=1.5em, itemsep=1pt, topsep=2pt, parsep=0pt}
@@ -22,8 +18,7 @@
 
 % ==================== HEADER ====================
 \noindent
-\begin{tabularx}{\textwidth}{@{} p{0.16\textwidth} @{\hspace{0.03\textwidth}} p{0.52\textwidth} @{\hspace{0.03\textwidth}} p{0.26\textwidth} @{}}
-  % Photo box
+\begin{minipage}[t]{0.16\textwidth}
   \IfFileExists{candidate_photo.jpg}{
     \includegraphics[width=2.1cm,height=2.6cm,keepaspectratio]{candidate_photo.jpg}
   }{
@@ -35,20 +30,19 @@
       \hline
     \end{tabular}
   }
-  &
-  % Candidate Name, Title, and Contact Info
-  \raggedright
-  \vspace{0.05cm}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
   {\LARGE \textbf{ {{personal.name}} }} \vspace{0.1cm} \\
-  {\large \textbf{ {{#if personal.role}}{{personal.role}}{{else}}Engineer{{/if}} }} \vspace{0.3cm} \\
-  \begin{tabularx}{\linewidth}{@{} p{0.48\linewidth} @{\hspace{0.04\linewidth}} p{0.48\linewidth} @{}}
+  {\large \textbf{ {{#if personal.role}}{{personal.role}}{{else}}Engineer{{/if}} }} \vspace{0.25cm} \\
+  \begin{tabular}{@{}ll@{}}
     \textbf{Phone:} {{personal.phone}} & \textbf{Address:} {{#if personal.address}}{{personal.address}}{{else}}India{{/if}} \\
     \textbf{Email:} {{personal.email}} & \textbf{Portfolio:} {{#if personal.portfolio}}{{personal.portfolio}}{{else}}{{personal.github}}{{/if}} \\
-  \end{tabularx}
-  &
-  % University Official Logo
+  \end{tabular}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.26\textwidth}
   \raggedleft
-  \vspace{0.05cm}
   \IfFileExists{snu_college_logo.png}{
     \includegraphics[width=3.9cm,keepaspectratio]{snu_college_logo.png}
   }{
@@ -57,7 +51,7 @@
     {\scriptsize \textbf{SISTER NIVEDITA} \par}
     {\scriptsize \textbf{UNIVERSITY} \par}
   }
-\end{tabularx}
+\end{minipage}
 
 \vspace{0.3cm}
 
@@ -65,18 +59,26 @@
 {{#if personal.summary}}
 \noindent
 \rule{\textwidth}{0.6pt} \vspace{0.15cm}
-\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
-  \textbf{\large PROFILE} &
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+  \textbf{\large PROFILE}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.75\textwidth}
   {{personal.summary}}
-\end{tabularx}
+\end{minipage}
 \vspace{0.25cm}
 {{/if}}
 
 % ==================== EDUCATION ====================
 \noindent
 \rule{\textwidth}{0.6pt} \vspace{0.15cm}
-\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
-  \textbf{\large EDUCATION} &
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+  \textbf{\large EDUCATION}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.75\textwidth}
   % College / University
   \textbf{ {{education.university}} } {{#if education.dates}}| {{education.dates}}{{/if}} \par
   {{education.degree}} \par
@@ -107,15 +109,19 @@
     {{#if education.percentage10}}\item Percentage: {{education.percentage10}}{{/if}}
   \end{itemize}
   {{/if}}
-\end{tabularx}
+\end{minipage}
 \vspace{0.25cm}
 
 % ==================== EXPERIENCE / PROJECTS ====================
 {{#if experience}}
 \noindent
 \rule{\textwidth}{0.6pt} \vspace{0.15cm}
-\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
-  \textbf{\large PROFESSIONAL \par EXPERIENCE / \par PROJECTS} &
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+  \textbf{\large PROFESSIONAL \par EXPERIENCE / \par PROJECTS}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.75\textwidth}
   {{#each experience}}
   \textbf{ {{title}} } {{#if dates}}| {{dates}}{{/if}} \par
   \textit{ {{company}} } {{#if location}}— {{location}}{{/if}} \par
@@ -151,7 +157,7 @@
   \vspace{0.15cm}
   {{/each}}
   {{/if}}
-\end{tabularx}
+\end{minipage}
 \vspace{0.25cm}
 {{/if}}
 
@@ -159,41 +165,45 @@
 {{#if certifications}}
 \noindent
 \rule{\textwidth}{0.6pt} \vspace{0.15cm}
-\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
-  \textbf{\large CERTIFICATES / \par ACHIEVEMENTS} &
-  \begin{minipage}[t]{\linewidth}
-    \begin{multicols}{2}
-      \begin{itemize}[leftmargin=1.2em]
-        {{#each certifications}}
-        {{#if name}}
-        \item \textbf{ {{name}} } {{#if date}}| {{date}}{{/if}} \par
-        \textit{ {{issuer}} }
-        {{/if}}
-        {{/each}}
-      \end{itemize}
-    \end{multicols}
-  \end{minipage}
-\end{tabularx}
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+  \textbf{\large CERTIFICATES / \par ACHIEVEMENTS}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.75\textwidth}
+  \begin{multicols}{2}
+    \begin{itemize}[leftmargin=1.2em]
+      {{#each certifications}}
+      {{#if name}}
+      \item \textbf{ {{name}} } {{#if date}}| {{date}}{{/if}} \par
+      \textit{ {{issuer}} }
+      {{/if}}
+      {{/each}}
+    \end{itemize}
+  \end{multicols}
+\end{minipage}
 \vspace{0.25cm}
 {{/if}}
 
 % ==================== SKILLS ====================
 \noindent
 \rule{\textwidth}{0.6pt} \vspace{0.15cm}
-\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
-  \textbf{\large SKILLS} &
-  \begin{minipage}[t]{\linewidth}
-    \begin{multicols}{2}
-      \begin{itemize}[leftmargin=1.2em]
-        {{#if skills.languages}}\item \textbf{Languages:} {{skills.languages}}{{/if}}
-        {{#if skills.frameworks}}\item \textbf{Frameworks:} {{skills.frameworks}}{{/if}}
-        {{#if skills.tools}}\item \textbf{Tools:} {{skills.tools}}{{/if}}
-        {{#if skills.csFundamentals}}\item \textbf{Core Concepts:} {{skills.csFundamentals}}{{/if}}
-        \item Problem-solving and analytical thinking
-        \item Teamwork and technical communication
-      \end{itemize}
-    \end{multicols}
-  \end{minipage}
-\end{tabularx}
+\noindent
+\begin{minipage}[t]{0.22\textwidth}
+  \textbf{\large SKILLS}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.75\textwidth}
+  \begin{multicols}{2}
+    \begin{itemize}[leftmargin=1.2em]
+      {{#if skills.languages}}\item \textbf{Languages:} {{skills.languages}}{{/if}}
+      {{#if skills.frameworks}}\item \textbf{Frameworks:} {{skills.frameworks}}{{/if}}
+      {{#if skills.tools}}\item \textbf{Tools:} {{skills.tools}}{{/if}}
+      {{#if skills.csFundamentals}}\item \textbf{Core Concepts:} {{skills.csFundamentals}}{{/if}}
+      \item Problem-solving and analytical thinking
+      \item Teamwork and technical communication
+    \end{itemize}
+  \end{multicols}
+\end{minipage}
 
 \end{document}
