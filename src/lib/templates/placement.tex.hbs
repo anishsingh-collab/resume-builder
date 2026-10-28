@@ -1,0 +1,195 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage{geometry}
+\geometry{left=0.6in, top=0.5in, right=0.6in, bottom=0.5in}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{array}
+
+\pagestyle{empty}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Bullet styling
+\setlist[itemize]{leftmargin=1.5em, itemsep=1pt, topsep=2pt, parsep=0pt}
+
+\begin{document}
+
+% ==================== HEADER ====================
+\noindent
+\begin{tabularx}{\textwidth}{@{} p{0.18\textwidth} @{\hspace{0.04\textwidth}} p{0.48\textwidth} @{\hspace{0.04\textwidth}} p{0.26\textwidth} @{}}
+  % Photo box placeholder
+  \begin{tabular}{|c|}
+    \hline
+    \rule{0pt}{1.8cm}\rule{1.4cm}{0pt} \\
+    \footnotesize Photo \\
+    \rule[-0.6cm]{0pt}{0.6cm}\rule{1.4cm}{0pt} \\
+    \hline
+  \end{tabular}
+  &
+  % Candidate Name and Title
+  \raggedright
+  \vspace{0.2cm}
+  {\LARGE \textbf{ {{personal.name}} }} \vspace{0.15cm} \\
+  {\large {{#if personal.role}}{{personal.role}}{{else}}Engineer{{/if}} }
+  &
+  % University / Group Branding
+  \raggedleft
+  \vspace{0.1cm}
+  {\tiny A Satyam Roychowdhury Initiative \par} \vspace{0.1cm}
+  {\large \textbf{SNU}} \\
+  {\scriptsize \textbf{SISTER NIVEDITA} \par}
+  {\scriptsize \textbf{UNIVERSITY} \par}
+\end{tabularx}
+
+\vspace{0.35cm}
+
+% Contact Information (2 Columns)
+\noindent
+\begin{tabularx}{\textwidth}{@{} p{0.50\textwidth} @{\hspace{0.05\textwidth}} p{0.45\textwidth} @{}}
+  \textbf{Phone:} {{personal.phone}} & \textbf{Address:} {{#if personal.address}}{{personal.address}}{{else}}India{{/if}} \\
+  \textbf{Email:} {{personal.email}} & \textbf{Portfolio / GitHub:} {{#if personal.portfolio}}{{personal.portfolio}}{{else}}{{personal.github}}{{/if}} \\
+\end{tabularx}
+
+\vspace{0.2cm}
+
+% ==================== PROFILE ====================
+{{#if personal.summary}}
+\noindent
+\rule{\textwidth}{0.6pt} \vspace{0.15cm}
+\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
+  \textbf{\large PROFILE} &
+  {{personal.summary}}
+\end{tabularx}
+\vspace{0.25cm}
+{{/if}}
+
+% ==================== EDUCATION ====================
+\noindent
+\rule{\textwidth}{0.6pt} \vspace{0.15cm}
+\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
+  \textbf{\large EDUCATION} &
+  % College / University
+  \textbf{ {{education.university}} } {{#if education.dates}}| {{education.dates}}{{/if}} \par
+  {{education.degree}} \par
+  \begin{itemize}
+    {{#if education.gpa}}\item CGPA / Score: {{education.gpa}}{{/if}}
+    {{#if education.awards}}\item {{education.awards}}{{/if}}
+  \end{itemize}
+  \vspace{0.2cm}
+
+  {{#if education.school12}}
+  % 12th / Higher Secondary
+  \textbf{ {{education.school12}} } {{#if education.dates12}}| {{education.dates12}}{{/if}} \par
+  Higher Secondary (12th) \par
+  \begin{itemize}
+    {{#if education.board12}}\item Board: {{education.board12}}{{/if}}
+    {{#if education.percentage12}}\item Percentage: {{education.percentage12}}{{/if}}
+    {{#if education.stream12}}\item Stream: {{education.stream12}}{{/if}}
+  \end{itemize}
+  \vspace{0.2cm}
+  {{/if}}
+
+  {{#if education.school10}}
+  % 10th / Secondary
+  \textbf{ {{education.school10}} } {{#if education.dates10}}| {{education.dates10}}{{/if}} \par
+  Secondary (10th) \par
+  \begin{itemize}
+    {{#if education.board10}}\item Board: {{education.board10}}{{/if}}
+    {{#if education.percentage10}}\item Percentage: {{education.percentage10}}{{/if}}
+  \end{itemize}
+  {{/if}}
+\end{tabularx}
+\vspace{0.25cm}
+
+% ==================== EXPERIENCE / PROJECTS ====================
+{{#if experience}}
+\noindent
+\rule{\textwidth}{0.6pt} \vspace{0.15cm}
+\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
+  \textbf{\large PROFESSIONAL \par EXPERIENCE / \par PROJECTS} &
+  {{#each experience}}
+  \textbf{ {{title}} } {{#if dates}}| {{dates}}{{/if}} \par
+  \textit{ {{company}} } {{#if location}}— {{location}}{{/if}} \par
+  {{#if bullets}}
+  \begin{itemize}
+    {{#each bullets}}
+    \item {{this}}
+    {{/each}}
+  \end{itemize}
+  {{else}}
+  \begin{itemize}
+    \item {{description}}
+  \end{itemize}
+  {{/if}}
+  \vspace{0.15cm}
+  {{/each}}
+
+  {{#if projects}}
+  {{#each projects}}
+  \textbf{ {{name}} } {{#if dates}}| {{dates}}{{/if}} \par
+  \textit{ {{technologies}} } \par
+  {{#if bullets}}
+  \begin{itemize}
+    {{#each bullets}}
+    \item {{this}}
+    {{/each}}
+  \end{itemize}
+  {{else}}
+  \begin{itemize}
+    \item {{description}}
+  \end{itemize}
+  {{/if}}
+  \vspace{0.15cm}
+  {{/each}}
+  {{/if}}
+\end{tabularx}
+\vspace{0.25cm}
+{{/if}}
+
+% ==================== CERTIFICATES / ACHIEVEMENTS ====================
+{{#if certifications}}
+\noindent
+\rule{\textwidth}{0.6pt} \vspace{0.15cm}
+\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
+  \textbf{\large CERTIFICATES / \par ACHIEVEMENTS} &
+  \begin{minipage}[t]{\linewidth}
+    \begin{multicols}{2}
+      \begin{itemize}[leftmargin=1.2em]
+        {{#each certifications}}
+        {{#if name}}
+        \item \textbf{ {{name}} } {{#if date}}| {{date}}{{/if}} \par
+        \textit{ {{issuer}} }
+        {{/if}}
+        {{/each}}
+      \end{itemize}
+    \end{multicols}
+  \end{minipage}
+\end{tabularx}
+\vspace{0.25cm}
+{{/if}}
+
+% ==================== SKILLS ====================
+\noindent
+\rule{\textwidth}{0.6pt} \vspace{0.15cm}
+\begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} @{\hspace{0.03\textwidth}} X @{}}
+  \textbf{\large SKILLS} &
+  \begin{minipage}[t]{\linewidth}
+    \begin{multicols}{2}
+      \begin{itemize}[leftmargin=1.2em]
+        {{#if skills.languages}}\item \textbf{Languages:} {{skills.languages}}{{/if}}
+        {{#if skills.frameworks}}\item \textbf{Frameworks:} {{skills.frameworks}}{{/if}}
+        {{#if skills.tools}}\item \textbf{Tools:} {{skills.tools}}{{/if}}
+        {{#if skills.csFundamentals}}\item \textbf{Core Concepts:} {{skills.csFundamentals}}{{/if}}
+        \item Problem-solving and analytical thinking
+        \item Teamwork and technical communication
+      \end{itemize}
+    \end{multicols}
+  \end{minipage}
+\end{tabularx}
+
+\end{document}

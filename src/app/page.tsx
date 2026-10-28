@@ -75,96 +75,88 @@ const InputField = ({ label, placeholder, value, onChange, className = "" }: any
   </div>
 );
 
-// --- Sample Resume & JD for One-Click Demo ---
+// --- Sample Resume & JD for One-Click Demo (Sister Nivedita University Placement Format) ---
 const sampleResumeData = {
   personal: {
-    name: "Alex Chen",
-    email: "alex.chen@berkeley.edu",
-    phone: "+1 (510) 847-2918",
-    linkedin: "linkedin.com/in/alexchen",
-    github: "github.com/alexchen",
+    name: "Samira Mehta",
+    role: "Mechanical Engineer",
+    email: "hello@reallygreatsite.com",
+    phone: "+123-456-7890",
+    address: "123 Anywhere St., Any City, ST 12345",
+    portfolio: "www.reallygreatsite.com",
+    linkedin: "linkedin.com/in/samiramehta",
+    github: "github.com/samiramehta",
+    summary: "A highly motivated and detail-oriented Mechanical Engineer with a strong foundation in design, manufacturing, and maintenance principles. Proficient in applying engineering concepts to solve real-world problems, with hands-on experience in tools such as AutoCAD, SolidWorks, and MATLAB. Demonstrates strong analytical, problem-solving, and teamwork skills, along with the ability to manage projects efficiently under deadlines. Seeking to contribute technical expertise and innovative thinking to a dynamic organization.",
   },
   education: {
-    university: "University of California, Berkeley",
-    location: "Berkeley, CA",
-    degree: "B.S. in Computer Science",
-    dates: "Aug 2022 – May 2026",
-    gpa: "9.2/10.0",
+    university: "Sister Nivedita University",
+    location: "Kolkata, WB",
+    degree: "Bachelor of Science in Mechanical Engineering",
+    dates: "2025-2027",
+    gpa: "8.5",
+    awards: "Best Thesis Awardee, Recognition for Extended Research Paper",
+    school12: "South City School",
+    dates12: "2023-2025",
+    board12: "WBCHSE",
+    percentage12: "95%",
+    stream12: "Science",
+    school10: "South City School",
+    dates10: "2019-2025",
+    board10: "WBBSE",
+    percentage10: "90%",
   },
   skills: {
-    languages: "Python, TypeScript, C++, Java, Go, SQL, C",
-    frameworks: "React, Next.js, Node.js, Express, FastAPI, Tailwind CSS",
-    tools: "Docker, Kubernetes, AWS, Git, Linux, PostgreSQL, Redis, Postman",
-    csFundamentals: "Distributed Systems, Data Structures, Algorithms, System Design, Operating Systems",
+    languages: "Python, MATLAB",
+    frameworks: "AutoCAD, SolidWorks",
+    tools: "ANSYS, MATLAB, Git",
+    csFundamentals: "Finite Element Analysis, Thermodynamics, CAD/CAM",
   },
   experience: [
     {
-      title: "Software Engineering Intern",
-      company: "Datadog",
-      location: "New York, NY",
-      dates: "May 2025 – Aug 2025",
-      description: "Engineered real-time telemetry pipelines and optimized Redis caching",
+      title: "Mechanical Engineer",
+      company: "Science and Tech Co.",
+      location: "Kolkata, WB",
+      dates: "2027-2030",
+      description: "Assisted in optimizing mechanical systems for manufacturing processes",
       bullets: [
-        "Architected a high-throughput event processing pipeline using Go and Kafka, handling 150K+ events/sec with sub-15ms latency.",
-        "Engineered an automated Redis caching tier that reduced database query overhead by 38% during high-traffic operational bursts.",
-        "Collaborated with infrastructure teams to deploy Kubernetes horizontal pod autoscalers across multi-region AWS clusters."
-      ],
-      feedback: "",
-    },
-    {
-      title: "Full-Stack Developer Intern",
-      company: "Scale AI",
-      location: "San Francisco, CA",
-      dates: "May 2024 – Aug 2024",
-      description: "Built microservices and annotation workflows",
-      bullets: [
-        "Constructed asynchronous REST and gRPC endpoints in Python and FastAPI to ingest multimodal training datasets.",
-        "Refactored React dashboard components with TypeScript, improving client-side bundle size by 24% and render speed by 180ms."
+        "Assisted in optimizing mechanical systems for manufacturing processes, improving production speed by 20%.",
+        "Drafted and implemented quality control procedures, reducing defects and inconsistencies by 30%.",
+        "Supported the creation of detailed project reports and documentation for senior stakeholders."
       ],
       feedback: "",
     }
   ],
   projects: [
     {
-      name: "Distributed Key-Value Store",
-      technologies: "Go, Raft Consensus, gRPC, Docker, Linux",
-      dates: "Jan 2025 – Mar 2025",
-      description: "Fault-tolerant distributed store implementing Raft",
+      name: "Automated Conveyor Optimization",
+      technologies: "SolidWorks, ANSYS, Arduino",
+      dates: "2026",
+      description: "Designed prototype sensor-driven conveyor",
       bullets: [
-        "Implemented Raft consensus algorithm from scratch in Go, providing strong consistency guarantees across 5-node distributed clusters.",
-        "Engineered custom RPC communication protocol via gRPC and Protocol Buffers, sustaining 4,200 req/sec under simulated partition testing."
-      ],
-      feedback: "",
-    },
-    {
-      name: "Collaborative Real-Time Canvas",
-      technologies: "TypeScript, React, WebSockets, Node.js, WebGL",
-      dates: "Oct 2024 – Dec 2024",
-      description: "Real-time canvas using CRDTs",
-      bullets: [
-        "Designed conflict-free replicated data types (CRDT) engine supporting low-latency concurrent drawing across 50+ simultaneous peers.",
-        "Optimized canvas render cycles using requestAnimationFrame and WebGL shaders, achieving steady 60 FPS under complex stroke density."
+        "Modeled conveyor tension mechanisms in SolidWorks, validating stress tolerances under dynamic loads in ANSYS.",
+        "Integrated sensor feedback loop using Arduino microcontroller, cutting sorting latency by 25%."
       ],
       feedback: "",
     }
   ],
   certifications: [
-    { name: "AWS Certified Developer – Associate", issuer: "Amazon Web Services", date: "2025" }
+    { name: "Project Management", issuer: "The Project Management Institute", date: "2027" },
+    { name: "System Optimization", issuer: "Scrum Learning Society", date: "2028" },
+    { name: "Risk Management and Mitigation", issuer: "Internal Auditors Team", date: "2028" },
+    { name: "Vendor Relations", issuer: "South City College", date: "2030" }
   ],
 };
 
-const sampleJobDescription = `Software Engineer, Infrastructure & Full Stack
+const sampleJobDescription = `Mechanical Engineer / Graduate Trainee Engineer
 Requirements:
-- Bachelor's degree in Computer Science or related technical discipline
-- Strong proficiency in modern programming languages: Python, Go, TypeScript, or C++
-- Experience with distributed systems, microservices, and asynchronous event pipelines (Kafka/RabbitMQ)
-- Hands-on experience with cloud infrastructure: Docker, Kubernetes, AWS, and Linux
-- Solid understanding of core CS fundamentals: Data Structures, Algorithms, System Design
-- Experience building performant APIs and scalable databases (PostgreSQL, Redis)`;
+- Degree in Mechanical Engineering, Manufacturing, or related field
+- Solid grasp of CAD/CAM modeling (AutoCAD, SolidWorks) and simulation (ANSYS/MATLAB)
+- Experience in manufacturing processes, quality control, and engineering documentation
+- Strong analytical, problem-solving, and cross-functional team communication skills`;
 
 const emptyResumeData = {
-  personal: { name: "", email: "", phone: "", linkedin: "", github: "" },
-  education: { university: "", location: "", degree: "", dates: "", gpa: "" },
+  personal: { name: "", role: "", email: "", phone: "", address: "", portfolio: "", linkedin: "", github: "", summary: "" },
+  education: { university: "", location: "", degree: "", dates: "", gpa: "", awards: "", school12: "", dates12: "", board12: "", percentage12: "", stream12: "", school10: "", dates10: "", board10: "", percentage10: "" },
   skills: { languages: "", frameworks: "", tools: "", csFundamentals: "" },
   experience: [{ title: "", company: "", location: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
   projects: [{ name: "", technologies: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
@@ -181,8 +173,8 @@ export default function Home() {
   const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | null>(null);
 
   const [data, setData] = useState({
-    personal: { name: "", email: "", phone: "", linkedin: "", github: "" },
-    education: { university: "", location: "", degree: "", dates: "", gpa: "" },
+    personal: { name: "", role: "", email: "", phone: "", address: "", portfolio: "", linkedin: "", github: "", summary: "" },
+    education: { university: "", location: "", degree: "", dates: "", gpa: "", awards: "", school12: "", dates12: "", board12: "", percentage12: "", stream12: "", school10: "", dates10: "", board10: "", percentage10: "" },
     skills: { languages: "", frameworks: "", tools: "", csFundamentals: "" },
     experience: [{ title: "", company: "", location: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
     projects: [{ name: "", technologies: "", dates: "", description: "", bullets: [] as string[], feedback: "" }],
@@ -232,6 +224,7 @@ export default function Home() {
   const loadSampleProfile = () => {
     setData(sampleResumeData);
     setJobDescription(sampleJobDescription);
+    setSelectedTemplate("placement");
     setAtsResult(null);
   };
 
@@ -457,7 +450,7 @@ export default function Home() {
                   <span className="text-neutral-500">00.</span> Resume Specification & Format
                 </h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <button
                   type="button"
                   onClick={() => setSelectedTemplate("classic")}
@@ -468,7 +461,7 @@ export default function Home() {
                   }`}
                 >
                   <div className="text-xs font-semibold">Template 01: Classic Tech</div>
-                  <div className="text-[11px] text-neutral-500 mt-1">Jake's Resume architecture • Horizontal rules • Single column ATS standard</div>
+                  <div className="text-[11px] text-neutral-500 mt-1">Jake's Resume standard • Horizontal rules • Single-column ATS</div>
                 </button>
                 <button
                   type="button"
@@ -482,6 +475,18 @@ export default function Home() {
                   <div className="text-xs font-semibold">Template 02: Bold Compact</div>
                   <div className="text-[11px] text-neutral-500 mt-1">Deep Mehta architecture • Tabular skill matrix • Tight margins</div>
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedTemplate("placement")}
+                  className={`text-left p-3.5 rounded border transition-all ${
+                    selectedTemplate === "placement" 
+                      ? "border-white bg-neutral-900/90 text-white" 
+                      : "border-neutral-800 bg-neutral-950/40 text-neutral-400 hover:border-neutral-700"
+                  }`}
+                >
+                  <div className="text-xs font-semibold">Template 03: College Placement</div>
+                  <div className="text-[11px] text-neutral-500 mt-1">Sister Nivedita University (SNU) format • Left margins • 10th/12th breakdown</div>
+                </button>
               </div>
             </div>
 
@@ -491,11 +496,23 @@ export default function Home() {
                 <span className="text-neutral-500">01.</span> Candidate Identification
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputField label="Full Name" placeholder="e.g. Alex Chen" value={data.personal.name} onChange={(v: string) => updatePersonal("name", v)} />
-                <InputField label="Email Address" placeholder="e.g. alex.chen@domain.com" value={data.personal.email} onChange={(v: string) => updatePersonal("email", v)} />
-                <InputField label="Phone Number" placeholder="e.g. +1 (555) 019-2834" value={data.personal.phone} onChange={(v: string) => updatePersonal("phone", v)} />
-                <InputField label="LinkedIn Handle / URL" placeholder="e.g. linkedin.com/in/alexchen" value={data.personal.linkedin} onChange={(v: string) => updatePersonal("linkedin", v)} />
-                <InputField label="GitHub Profile URL" placeholder="e.g. github.com/alexchen" value={data.personal.github} onChange={(v: string) => updatePersonal("github", v)} className="sm:col-span-2" />
+                <InputField label="Full Name" placeholder="e.g. Samira Mehta" value={data.personal.name} onChange={(v: string) => updatePersonal("name", v)} />
+                <InputField label="Role / Discipline Title" placeholder="e.g. Mechanical Engineer / Software Engineer" value={data.personal.role} onChange={(v: string) => updatePersonal("role", v)} />
+                <InputField label="Email Address" placeholder="e.g. hello@reallygreatsite.com" value={data.personal.email} onChange={(v: string) => updatePersonal("email", v)} />
+                <InputField label="Phone Number" placeholder="e.g. +91 98765 43210" value={data.personal.phone} onChange={(v: string) => updatePersonal("phone", v)} />
+                <InputField label="Address / Current Location" placeholder="e.g. Kolkata, West Bengal" value={data.personal.address} onChange={(v: string) => updatePersonal("address", v)} />
+                <InputField label="Portfolio / Website URL" placeholder="e.g. www.reallygreatsite.com" value={data.personal.portfolio} onChange={(v: string) => updatePersonal("portfolio", v)} />
+                <InputField label="LinkedIn Handle / URL" placeholder="e.g. linkedin.com/in/samiramehta" value={data.personal.linkedin} onChange={(v: string) => updatePersonal("linkedin", v)} />
+                <InputField label="GitHub Profile URL" placeholder="e.g. github.com/samiramehta" value={data.personal.github} onChange={(v: string) => updatePersonal("github", v)} />
+                <div className="sm:col-span-2">
+                  <label className="block text-[11px] font-mono font-medium text-neutral-400 tracking-wider uppercase mb-1.5">Profile Summary / Career Objective</label>
+                  <textarea 
+                    className="dark-input h-24 resize-none text-xs leading-relaxed" 
+                    placeholder="Brief career objective or profile summary highlighting technical foundations, domain tools, analytical skills, and career focus..." 
+                    value={data.personal.summary} 
+                    onChange={e => updatePersonal("summary", e.target.value)} 
+                  />
+                </div>
               </div>
             </div>
 
@@ -504,12 +521,39 @@ export default function Home() {
               <h2 className="text-sm font-mono uppercase tracking-wider text-neutral-300 mb-5 flex items-center gap-2">
                 <span className="text-neutral-500">02.</span> Academic Credentials
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <InputField label="Institution / University" placeholder="e.g. University of California, Berkeley" value={data.education.university} onChange={(v: string) => updateEducation("university", v)} />
-                <InputField label="Campus Location" placeholder="e.g. Berkeley, CA" value={data.education.location} onChange={(v: string) => updateEducation("location", v)} />
-                <InputField label="Degree & Major" placeholder="e.g. B.S. in Computer Science" value={data.education.degree} onChange={(v: string) => updateEducation("degree", v)} />
-                <InputField label="Enrollment Dates" placeholder="e.g. Aug 2022 – May 2026" value={data.education.dates} onChange={(v: string) => updateEducation("dates", v)} />
-                <InputField label="Grade Point Average (GPA)" placeholder="e.g. 9.1/10.0 or 3.85/4.0" value={data.education.gpa} onChange={(v: string) => updateEducation("gpa", v)} className="sm:col-span-2" />
+              <div className="space-y-6">
+                <div>
+                  <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider mb-3">Undergraduate / College Degree</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <InputField label="Institution / University" placeholder="e.g. Sister Nivedita University" value={data.education.university} onChange={(v: string) => updateEducation("university", v)} />
+                    <InputField label="Campus Location" placeholder="e.g. Kolkata, WB" value={data.education.location} onChange={(v: string) => updateEducation("location", v)} />
+                    <InputField label="Degree & Major" placeholder="e.g. Bachelor of Science in Mechanical Engineering" value={data.education.degree} onChange={(v: string) => updateEducation("degree", v)} />
+                    <InputField label="Enrollment Dates" placeholder="e.g. 2025-2027" value={data.education.dates} onChange={(v: string) => updateEducation("dates", v)} />
+                    <InputField label="Grade Point Average (GPA / CGPA)" placeholder="e.g. 8.5" value={data.education.gpa} onChange={(v: string) => updateEducation("gpa", v)} />
+                    <InputField label="Academic Honors / Research Award" placeholder="e.g. Best Thesis Awardee, Extended Research Paper" value={data.education.awards} onChange={(v: string) => updateEducation("awards", v)} />
+                  </div>
+                </div>
+
+                <div className="border-t border-neutral-800/80 pt-4">
+                  <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider mb-3">Class 12 / Higher Secondary (Placement Format)</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <InputField label="School / College Name" placeholder="e.g. South City School" value={data.education.school12} onChange={(v: string) => updateEducation("school12", v)} />
+                    <InputField label="Board" placeholder="e.g. WBCHSE / CBSE / ISC" value={data.education.board12} onChange={(v: string) => updateEducation("board12", v)} />
+                    <InputField label="Percentage / Marks" placeholder="e.g. 95%" value={data.education.percentage12} onChange={(v: string) => updateEducation("percentage12", v)} />
+                    <InputField label="Stream" placeholder="e.g. Science" value={data.education.stream12} onChange={(v: string) => updateEducation("stream12", v)} />
+                    <InputField label="Year / Duration" placeholder="e.g. 2023-2025" value={data.education.dates12} onChange={(v: string) => updateEducation("dates12", v)} className="sm:col-span-2" />
+                  </div>
+                </div>
+
+                <div className="border-t border-neutral-800/80 pt-4">
+                  <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider mb-3">Class 10 / Secondary (Placement Format)</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                    <InputField label="School Name" placeholder="e.g. South City School" value={data.education.school10} onChange={(v: string) => updateEducation("school10", v)} className="sm:col-span-2" />
+                    <InputField label="Board" placeholder="e.g. WBBSE / CBSE / ICSE" value={data.education.board10} onChange={(v: string) => updateEducation("board10", v)} />
+                    <InputField label="Percentage / Marks" placeholder="e.g. 90%" value={data.education.percentage10} onChange={(v: string) => updateEducation("percentage10", v)} />
+                    <InputField label="Year / Duration" placeholder="e.g. 2019-2025" value={data.education.dates10} onChange={(v: string) => updateEducation("dates10", v)} className="sm:col-span-4" />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -938,7 +982,7 @@ export default function Home() {
                 <span className="font-mono text-xs text-neutral-300 font-medium">LIVE DOCUMENT CANVAS</span>
               </div>
               <span className="text-[11px] font-mono text-neutral-500 uppercase">
-                {selectedTemplate === "classic" ? "Template: Classic" : "Template: Bold"}
+                {selectedTemplate === "classic" ? "Template: Classic Tech" : selectedTemplate === "bold" ? "Template: Bold Compact" : "Template: SNU Placement"}
               </span>
             </div>
 
@@ -946,135 +990,314 @@ export default function Home() {
             <div className="border border-neutral-800 rounded-lg bg-neutral-900/60 p-4 shadow-2xl">
               <div className="bg-white text-neutral-900 rounded shadow-md p-8 min-h-[700px] max-h-[calc(100vh-210px)] overflow-y-auto font-serif text-[11px] leading-relaxed">
                 
-                {/* Header */}
-                <div className="text-center border-b border-neutral-300 pb-3 mb-4">
-                  <h2 className="text-xl font-bold tracking-tight text-neutral-950 mb-1">
-                    {data.personal.name || "[Candidate Full Name]"}
-                  </h2>
-                  <div className="text-[10px] text-neutral-600 space-x-1.5 font-sans">
-                    <span>{data.personal.phone || "(555) 000-0000"}</span>
-                    <span>•</span>
-                    <span className="underline">{data.personal.email || "candidate@email.com"}</span>
-                    {data.personal.linkedin && (
-                      <>
-                        <span>•</span>
-                        <span className="underline">LinkedIn</span>
-                      </>
-                    )}
-                    {data.personal.github && (
-                      <>
-                        <span>•</span>
-                        <span className="underline">GitHub</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Education */}
-                <div className="mb-4">
-                  <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
-                    Education
-                  </div>
-                  <div className="flex justify-between items-baseline font-sans text-[10.5px]">
-                    <span className="font-bold">{data.education.university || "[University Name]"}</span>
-                    <span className="text-neutral-600">{data.education.location || "City, State"}</span>
-                  </div>
-                  <div className="flex justify-between items-baseline text-[10.5px] italic text-neutral-700">
-                    <span>{data.education.degree || "[Degree Title]"} {data.education.gpa && <span className="font-sans not-italic">| GPA: {data.education.gpa}</span>}</span>
-                    <span className="not-italic font-sans text-neutral-600">{data.education.dates || "Dates"}</span>
-                  </div>
-                </div>
-
-                {/* Technical Skills */}
-                <div className="mb-4">
-                  <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
-                    Technical Skills
-                  </div>
-                  <div className="font-sans text-[10px] space-y-1">
-                    <div><span className="font-semibold">Languages:</span> {data.skills.languages || "Python, Java, TypeScript, C++"}</div>
-                    <div><span className="font-semibold">Frameworks:</span> {data.skills.frameworks || "React, Next.js, Node.js, Spring Boot"}</div>
-                    <div><span className="font-semibold">Tools:</span> {data.skills.tools || "Git, Docker, AWS, Linux"}</div>
-                    {data.skills.csFundamentals && (
-                      <div><span className="font-semibold">Fundamentals:</span> {data.skills.csFundamentals}</div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Experience */}
-                {data.experience.length > 0 && data.experience.some(e => e.title || e.company) && (
-                  <div className="mb-4">
-                    <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
-                      Experience
-                    </div>
-                    {data.experience.map((exp, idx) => (
-                      <div key={idx} className="mb-3 last:mb-0">
-                        <div className="flex justify-between items-baseline font-sans text-[10.5px]">
-                          <span className="font-bold">{exp.title || "Software Engineering Role"}</span>
-                          <span className="text-neutral-600">{exp.dates || "Dates"}</span>
-                        </div>
-                        <div className="flex justify-between items-baseline text-[10.5px] italic text-neutral-700 mb-1">
-                          <span>{exp.company || "Company Name"}</span>
-                          <span className="not-italic font-sans text-neutral-600">{exp.location || "Location"}</span>
-                        </div>
-                        {exp.bullets.length > 0 ? (
-                          <ul className="list-disc list-inside text-[10px] text-neutral-800 space-y-0.5">
-                            {exp.bullets.map((b, bIdx) => (
-                              <li key={bIdx}>{b}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="text-[10px] text-neutral-500 italic">
-                            {exp.description ? "Click 'Format with AI' to generate bullet points." : "[Role description & quantified achievements...]"}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Projects */}
-                {data.projects.length > 0 && data.projects.some(p => p.name) && (
-                  <div className="mb-4">
-                    <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
-                      Projects
-                    </div>
-                    {data.projects.map((proj, idx) => (
-                      <div key={idx} className="mb-3 last:mb-0">
-                        <div className="flex justify-between items-baseline font-sans text-[10.5px]">
-                          <span className="font-bold">{proj.name || "Project Name"}</span>
-                          <span className="text-neutral-600">{proj.dates || "Timeline"}</span>
-                        </div>
-                        <div className="text-[10px] italic text-neutral-700 mb-1">
-                          {proj.technologies || "Tech Stack"}
-                        </div>
-                        {proj.bullets.length > 0 ? (
-                          <ul className="list-disc list-inside text-[10px] text-neutral-800 space-y-0.5">
-                            {proj.bullets.map((b, bIdx) => (
-                              <li key={bIdx}>{b}</li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="text-[10px] text-neutral-500 italic">
-                            {proj.description ? "Click 'Format with AI' to generate bullet points." : "[Project achievements & system architecture...]"}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Certifications */}
-                {data.certifications.length > 0 && data.certifications.some(c => c.name) && (
+                {selectedTemplate === "placement" ? (
                   <div>
-                    <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
-                      Certifications
-                    </div>
-                    {data.certifications.map((cert, idx) => (
-                      <div key={idx} className="flex justify-between items-baseline text-[10px] font-sans">
-                        <span><strong className="font-semibold">{cert.name}</strong> – {cert.issuer}</span>
-                        <span className="text-neutral-600">{cert.date}</span>
+                    {/* Header: Photo Box | Candidate Name + Title | SNU Branding */}
+                    <div className="flex items-center justify-between border-b-2 border-neutral-900 pb-3 mb-3">
+                      {/* Photo Placeholder */}
+                      <div className="w-16 h-20 border-2 border-dashed border-neutral-300 rounded flex flex-col items-center justify-center text-[9px] text-neutral-400 bg-neutral-50 shrink-0 select-none">
+                        <span>Photo</span>
                       </div>
-                    ))}
+
+                      {/* Name & Title */}
+                      <div className="flex-1 px-5">
+                        <h2 className="text-xl font-bold tracking-tight text-neutral-950 uppercase font-sans">
+                          {data.personal.name || "Candidate Name"}
+                        </h2>
+                        <div className="text-xs font-medium text-neutral-700 tracking-wide mt-0.5 font-sans">
+                          {data.personal.role || "Engineer"}
+                        </div>
+                      </div>
+
+                      {/* University & Group Branding */}
+                      <div className="text-right shrink-0 font-sans select-none">
+                        <div className="text-[7px] text-neutral-500 uppercase tracking-tight">A Satyam Roychowdhury Initiative</div>
+                        <div className="text-lg font-black tracking-tight text-neutral-950 leading-none mt-0.5">SNU</div>
+                        <div className="text-[7.5px] font-bold text-neutral-800 tracking-tight leading-tight">SISTER NIVEDITA</div>
+                        <div className="text-[7.5px] font-bold text-neutral-800 tracking-tight leading-tight">UNIVERSITY</div>
+                      </div>
+                    </div>
+
+                    {/* Contact Details (2 Columns) */}
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[10px] font-sans pb-3 mb-3 border-b border-neutral-300 text-neutral-800">
+                      <div><strong className="font-semibold text-neutral-950">Phone:</strong> {data.personal.phone || "+91-00000-00000"}</div>
+                      <div><strong className="font-semibold text-neutral-950">Address:</strong> {data.personal.address || "Kolkata, WB"}</div>
+                      <div><strong className="font-semibold text-neutral-950">Email:</strong> {data.personal.email || "hello@reallygreatsite.com"}</div>
+                      <div><strong className="font-semibold text-neutral-950">Portfolio / GitHub:</strong> {data.personal.portfolio || data.personal.github || "github.com/candidate"}</div>
+                    </div>
+
+                    {/* PROFILE */}
+                    {data.personal.summary && (
+                      <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
+                        <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950">PROFILE</div>
+                        <div className="col-span-9 text-[10px] text-neutral-800 leading-relaxed text-justify">
+                          {data.personal.summary}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* EDUCATION */}
+                    <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
+                      <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950">EDUCATION</div>
+                      <div className="col-span-9 space-y-3 text-[10px] text-neutral-800">
+                        {/* College */}
+                        <div>
+                          <div className="font-bold text-neutral-950">
+                            {data.education.university || "Sister Nivedita University"} {data.education.dates && <span className="font-normal text-neutral-600">| {data.education.dates}</span>}
+                          </div>
+                          <div className="text-neutral-700">{data.education.degree || "Bachelor of Science in Mechanical Engineering"}</div>
+                          <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-700">
+                            {data.education.gpa && <li>CGPA / Score: {data.education.gpa}</li>}
+                            {data.education.awards && <li>{data.education.awards}</li>}
+                          </ul>
+                        </div>
+
+                        {/* 12th */}
+                        {data.education.school12 && (
+                          <div>
+                            <div className="font-bold text-neutral-950">
+                              {data.education.school12} {data.education.dates12 && <span className="font-normal text-neutral-600">| {data.education.dates12}</span>}
+                            </div>
+                            <div className="text-neutral-700">Higher Secondary (12th)</div>
+                            <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-neutral-700">
+                              {data.education.board12 && <li>Board: {data.education.board12}</li>}
+                              {data.education.percentage12 && <li>Percentage: {data.education.percentage12}</li>}
+                              {data.education.stream12 && <li>Stream: {data.education.stream12}</li>}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* 10th */}
+                        {data.education.school10 && (
+                          <div>
+                            <div className="font-bold text-neutral-950">
+                              {data.education.school10} {data.education.dates10 && <span className="font-normal text-neutral-600">| {data.education.dates10}</span>}
+                            </div>
+                            <div className="text-neutral-700">Secondary (10th)</div>
+                            <ul className="list-disc list-inside mt-0.5 space-y-0.5 text-neutral-700">
+                              {data.education.board10 && <li>Board: {data.education.board10}</li>}
+                              {data.education.percentage10 && <li>Percentage: {data.education.percentage10}</li>}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* PROFESSIONAL EXPERIENCE / PROJECTS */}
+                    <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
+                      <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950 leading-tight">
+                        PROFESSIONAL EXPERIENCE / PROJECTS
+                      </div>
+                      <div className="col-span-9 space-y-3 text-[10px] text-neutral-800">
+                        {data.experience.map((exp, idx) => (
+                          <div key={idx}>
+                            <div className="font-bold text-neutral-950">
+                              {exp.title || "Mechanical Engineer"} {exp.dates && <span className="font-normal text-neutral-600">| {exp.dates}</span>}
+                            </div>
+                            <div className="italic text-neutral-700">
+                              {exp.company || "Company Name"} {exp.location && <span>— {exp.location}</span>}
+                            </div>
+                            {exp.bullets.length > 0 ? (
+                              <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-700">
+                                {exp.bullets.map((b, bIdx) => (
+                                  <li key={bIdx}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : exp.description ? (
+                              <p className="mt-1 text-neutral-700">{exp.description}</p>
+                            ) : null}
+                          </div>
+                        ))}
+
+                        {data.projects.map((proj, idx) => (
+                          <div key={idx}>
+                            <div className="font-bold text-neutral-950">
+                              {proj.name || "Project Title"} {proj.dates && <span className="font-normal text-neutral-600">| {proj.dates}</span>}
+                            </div>
+                            <div className="italic text-neutral-700">{proj.technologies}</div>
+                            {proj.bullets.length > 0 ? (
+                              <ul className="list-disc list-inside mt-1 space-y-0.5 text-neutral-700">
+                                {proj.bullets.map((b, bIdx) => (
+                                  <li key={bIdx}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : proj.description ? (
+                              <p className="mt-1 text-neutral-700">{proj.description}</p>
+                            ) : null}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CERTIFICATES / ACHIEVEMENTS */}
+                    {data.certifications.length > 0 && data.certifications.some(c => c.name) && (
+                      <div className="grid grid-cols-12 gap-3 py-3 border-b border-neutral-300 font-sans">
+                        <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950 leading-tight">
+                          CERTIFICATES / ACHIEVEMENTS
+                        </div>
+                        <div className="col-span-9 grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-neutral-800">
+                          {data.certifications.map((cert, idx) => (
+                            <div key={idx}>
+                              <div className="font-bold text-neutral-950">
+                                {cert.name} {cert.date && <span className="font-normal text-neutral-600">| {cert.date}</span>}
+                              </div>
+                              <div className="italic text-[9.5px] text-neutral-600">{cert.issuer}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* SKILLS */}
+                    <div className="grid grid-cols-12 gap-3 py-3 font-sans">
+                      <div className="col-span-3 text-[10.5px] font-bold uppercase tracking-wider text-neutral-950">SKILLS</div>
+                      <div className="col-span-9 grid grid-cols-2 gap-4 text-[10px] text-neutral-800">
+                        <ul className="list-disc list-inside space-y-1">
+                          {data.skills.languages && <li><strong className="font-semibold">Languages:</strong> {data.skills.languages}</li>}
+                          {data.skills.frameworks && <li><strong className="font-semibold">Frameworks:</strong> {data.skills.frameworks}</li>}
+                          {data.skills.tools && <li><strong className="font-semibold">Tools:</strong> {data.skills.tools}</li>}
+                        </ul>
+                        <ul className="list-disc list-inside space-y-1">
+                          {data.skills.csFundamentals && <li><strong className="font-semibold">Core Concepts:</strong> {data.skills.csFundamentals}</li>}
+                          <li>Problem-solving & analytical thinking</li>
+                          <li>Teamwork & technical communication</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    {/* Header */}
+                    <div className="text-center border-b border-neutral-300 pb-3 mb-4">
+                      <h2 className="text-xl font-bold tracking-tight text-neutral-950 mb-1">
+                        {data.personal.name || "[Candidate Full Name]"}
+                      </h2>
+                      <div className="text-[10px] text-neutral-600 space-x-1.5 font-sans">
+                        <span>{data.personal.phone || "(555) 000-0000"}</span>
+                        <span>•</span>
+                        <span className="underline">{data.personal.email || "candidate@email.com"}</span>
+                        {data.personal.linkedin && (
+                          <>
+                            <span>•</span>
+                            <span className="underline">LinkedIn</span>
+                          </>
+                        )}
+                        {data.personal.github && (
+                          <>
+                            <span>•</span>
+                            <span className="underline">GitHub</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Education */}
+                    <div className="mb-4">
+                      <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                        Education
+                      </div>
+                      <div className="flex justify-between items-baseline font-sans text-[10.5px]">
+                        <span className="font-bold">{data.education.university || "[University Name]"}</span>
+                        <span className="text-neutral-600">{data.education.location || "City, State"}</span>
+                      </div>
+                      <div className="flex justify-between items-baseline text-[10.5px] italic text-neutral-700">
+                        <span>{data.education.degree || "[Degree Title]"} {data.education.gpa && <span className="font-sans not-italic">| GPA: {data.education.gpa}</span>}</span>
+                        <span className="not-italic font-sans text-neutral-600">{data.education.dates || "Dates"}</span>
+                      </div>
+                    </div>
+
+                    {/* Technical Skills */}
+                    <div className="mb-4">
+                      <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                        Technical Skills
+                      </div>
+                      <div className="font-sans text-[10px] space-y-1">
+                        <div><span className="font-semibold">Languages:</span> {data.skills.languages || "Python, Java, TypeScript, C++"}</div>
+                        <div><span className="font-semibold">Frameworks:</span> {data.skills.frameworks || "React, Next.js, Node.js, Spring Boot"}</div>
+                        <div><span className="font-semibold">Tools:</span> {data.skills.tools || "Git, Docker, AWS, Linux"}</div>
+                        {data.skills.csFundamentals && (
+                          <div><span className="font-semibold">Fundamentals:</span> {data.skills.csFundamentals}</div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Experience */}
+                    {data.experience.length > 0 && data.experience.some(e => e.title || e.company) && (
+                      <div className="mb-4">
+                        <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                          Experience
+                        </div>
+                        {data.experience.map((exp, idx) => (
+                          <div key={idx} className="mb-3 last:mb-0">
+                            <div className="flex justify-between items-baseline font-sans text-[10.5px]">
+                              <span className="font-bold">{exp.title || "Software Engineering Role"}</span>
+                              <span className="text-neutral-600">{exp.dates || "Dates"}</span>
+                            </div>
+                            <div className="flex justify-between items-baseline text-[10.5px] italic text-neutral-700 mb-1">
+                              <span>{exp.company || "Company Name"}</span>
+                              <span className="not-italic font-sans text-neutral-600">{exp.location || "Location"}</span>
+                            </div>
+                            {exp.bullets.length > 0 ? (
+                              <ul className="list-disc list-inside text-[10px] text-neutral-800 space-y-0.5">
+                                {exp.bullets.map((b, bIdx) => (
+                                  <li key={bIdx}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-[10px] text-neutral-500 italic">
+                                {exp.description ? "Click 'Format with AI' to generate bullet points." : "[Role description & quantified achievements...]"}
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Projects */}
+                    {data.projects.length > 0 && data.projects.some(p => p.name) && (
+                      <div className="mb-4">
+                        <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                          Projects
+                        </div>
+                        {data.projects.map((proj, idx) => (
+                          <div key={idx} className="mb-3 last:mb-0">
+                            <div className="flex justify-between items-baseline font-sans text-[10.5px]">
+                              <span className="font-bold">{proj.name || "Project Name"}</span>
+                              <span className="text-neutral-600">{proj.dates || "Timeline"}</span>
+                            </div>
+                            <div className="text-[10px] italic text-neutral-700 mb-1">
+                              {proj.technologies || "Tech Stack"}
+                            </div>
+                            {proj.bullets.length > 0 ? (
+                              <ul className="list-disc list-inside text-[10px] text-neutral-800 space-y-0.5">
+                                {proj.bullets.map((b, bIdx) => (
+                                  <li key={bIdx}>{b}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-[10px] text-neutral-500 italic">
+                                {proj.description ? "Click 'Format with AI' to generate bullet points." : "[Project achievements & system architecture...]"}
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Certifications */}
+                    {data.certifications.length > 0 && data.certifications.some(c => c.name) && (
+                      <div>
+                        <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-neutral-900 border-b border-neutral-900 pb-0.5 mb-2">
+                          Certifications
+                        </div>
+                        {data.certifications.map((cert, idx) => (
+                          <div key={idx} className="flex justify-between items-baseline text-[10px] font-sans">
+                            <span><strong className="font-semibold">{cert.name}</strong> – {cert.issuer}</span>
+                            <span className="text-neutral-600">{cert.date}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
