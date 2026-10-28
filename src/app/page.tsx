@@ -1348,7 +1348,7 @@ export default function Home() {
             </div>
 
             {/* Quick Helper Bar */}
-            <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500 px-2">
+            <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500 px-2 print-hide">
               <span>Auto-synced with editor</span>
               <span>8.5" × 11" US Letter Ratio</span>
             </div>
